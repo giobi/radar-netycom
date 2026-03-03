@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    font-family: 'IBM Plex Mono', 'SFMono-Regular', 'Consolas', monospace;
+    background: #fafaf9;
+    color: #1c1917;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.mark {
+    width: 48px; height: 48px;
+    border: 2px solid #1c1917;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+}
+.mark svg { width: 20px; height: 20px; stroke: #1c1917; fill: none; stroke-width: 2; }
+h1 {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+}
+p {
+    font-size: .75rem;
+    color: #a8a29e;
+    font-weight: 400;
+}
+a {
+    color: #a8a29e;
+    text-decoration: none;
+    font-size: .68rem;
+    margin-top: 3rem;
+    letter-spacing: .04em;
+}
+a:hover { color: #57534e; }
+</style>
+</head>
+<body>
+<div class="mark">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><line x1="12" y1="2" x2="12" y2="4"/></svg>
+</div>
+<h1>Radar</h1>
+<p>Report di collaudo</p>
+<a href="https://netycom.it">netycom.it</a>
+</body>
+</html>

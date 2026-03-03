@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Nexum — TODO Mike: Security Issues</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #fafaf9; --surface: #ffffff; --surface-alt: #f5f5f4;
+    --border: #e5e5e0; --border-strong: #d0d0c8;
+    --green: #15803d; --green-bg: rgba(21,128,61,.06);
+    --yellow: #854d0e; --yellow-bg: rgba(133,77,14,.06);
+    --red: #b91c1c; --red-bg: rgba(185,28,28,.06);
+    --blue: #1d4ed8; --blue-bg: rgba(29,78,216,.06);
+    --text: #1c1917; --text-secondary: #57534e; --text-muted: #a8a29e;
+    --mono: 'IBM Plex Mono', 'SFMono-Regular', 'Consolas', monospace;
+    --radius: 3px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: var(--mono); background: var(--bg); color: var(--text); line-height:1.7; font-size:14px; }
+
+.header { background: var(--surface); border-bottom: 2px solid var(--text); padding: 2rem 0 1.75rem; }
+.container { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+.brand { font-size: .65rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .75rem; display: flex; align-items: center; gap: .5rem; }
+.brand svg { width: 14px; height: 14px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+.title { font-size: 1.3rem; font-weight: 700; margin-bottom: .35rem; letter-spacing: -.01em; }
+.subtitle { font-size: .85rem; color: var(--text-secondary); }
+.meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: .75rem; color: var(--text-secondary); margin-top: .75rem; }
+.meta-item { display: flex; align-items: center; gap: .35rem; }
+
+.content { padding: 2rem 0; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; }
+.card-header { display: flex; align-items: center; gap: .6rem; margin-bottom: .75rem; }
+.card-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: .8rem; }
+.card-icon.red { background: var(--red-bg); color: var(--red); }
+.card-icon.yellow { background: var(--yellow-bg); color: var(--yellow); }
+.card-icon.green { background: var(--green-bg); color: var(--green); }
+.card-icon.blue { background: var(--blue-bg); color: var(--blue); }
+.card-title { font-weight: 600; font-size: .9rem; }
+.card-issue { font-size: .7rem; color: var(--text-muted); font-weight: 400; }
+.card-body { font-size: .82rem; color: var(--text-secondary); line-height: 1.8; }
+.card-body p { margin-bottom: .5rem; }
+.card-body strong { color: var(--text); }
+
+.code-block { background: #1c1917; color: #d6d3d1; padding: 1rem 1.25rem; border-radius: var(--radius); font-size: .75rem; line-height: 1.9; overflow-x: auto; white-space: pre-wrap; word-break: break-all; margin: .75rem 0; }
+
+.tag { display: inline-block; font-size: .65rem; font-weight: 600; letter-spacing: .05em; padding: .15rem .5rem; border-radius: 2px; text-transform: uppercase; }
+.tag-server { background: var(--red-bg); color: var(--red); }
+.tag-done { background: var(--green-bg); color: var(--green); }
+.tag-waiting { background: var(--yellow-bg); color: var(--yellow); }
+
+.summary-box { background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+.summary-box h2 { font-size: .85rem; font-weight: 700; margin-bottom: .5rem; }
+.summary-table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+.summary-table th { text-align: left; font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); padding: .4rem 0; border-bottom: 1px solid var(--border); }
+.summary-table td { padding: .5rem 0; border-bottom: 1px solid var(--surface-alt); }
+
+.footer { padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 1rem; font-size: .7rem; color: var(--text-muted); text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="container">
+        <div class="brand">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="12"/><line x1="12" y1="12" x2="18" y2="16"/></svg>
+            Radar / netycom.it
+        </div>
+        <div class="title">Nexum — TODO Server per Mike</div>
+        <div class="subtitle">Issue di sicurezza che richiedono intervento lato server (SRVAPPWEB / Apache)</div>
+        <div class="meta-row">
+            <div class="meta-item">Target: nexumapp.estendo.it</div>
+            <div class="meta-item">Server: SRVAPPWEB (62.173.167.212)</div>
+            <div class="meta-item">Data: 2026-03-03</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+
+        <!-- Summary -->
+        <div class="summary-box">
+            <h2>Riepilogo</h2>
+            <table class="summary-table">
+                <thead>
+                    <tr><th>Issue</th><th>Cosa</th><th>Chi</th><th>Stato</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#66 pt.2</td>
+                        <td>Client-side Desync Attack</td>
+                        <td>Mike</td>
+                        <td><span class="tag tag-server">server</span></td>
+                    </tr>
+                    <tr>
+                        <td>#66 pt.3</td>
+                        <td>HSTS mancante</td>
+                        <td>Mike</td>
+                        <td><span class="tag tag-server">server</span></td>
+                    </tr>
+                    <tr>
+                        <td>#66 pt.8</td>
+                        <td>Configurazione TLS/cipher</td>
+                        <td>Mike</td>
+                        <td><span class="tag tag-server">server</span></td>
+                    </tr>
+                    <tr>
+                        <td>#66 pt.1</td>
+                        <td>Password policy min 12 chars</td>
+                        <td>Giobi</td>
+                        <td><span class="tag tag-done">fatto</span></td>
+                    </tr>
+                    <tr>
+                        <td>#66 pt.5</td>
+                        <td>Aggiornamento moment.js</td>
+                        <td>Giobi</td>
+                        <td><span class="tag tag-done">fatto</span></td>
+                    </tr>
+                    <tr>
+                        <td>#82</td>
+                        <td>Certificato SSL Namirial</td>
+                        <td>Mike</td>
+                        <td><span class="tag tag-waiting">in attesa</span></td>
+                    </tr>
+                    <tr>
+                        <td>#115</td>
+                        <td>Headers Expires + Set-Cookie</td>
+                        <td>Mike</td>
+                        <td><span class="tag tag-server">server</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Issue #66 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon red">1</div>
+                <div>
+                    <div class="card-title">Penetration Test — Punti server <span class="card-issue">#66</span></div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>Dal report del penetration test (PDF allegato all'issue) restano <strong>3 punti che richiedono intervento lato Apache/server</strong>. I punti applicativi (password policy e moment.js) sono stati risolti lato codice.</p>
+
+                <p><strong>Punto 2 — Client-side Desync Attack</strong></p>
+                <p>Il server potrebbe essere vulnerabile ad attacchi di desincronizzazione HTTP. La mitigazione va fatta a livello di web server / reverse proxy.</p>
+                <p>Azione richiesta: verificare la configurazione di Apache per il parsing delle richieste HTTP (chunked transfer encoding, content-length handling). Considerare l'abilitazione di <code>HttpProtocolOptions Strict</code>.</p>
+
+                <p><strong>Punto 3 — HTTP Strict Transport Security (HSTS) mancante</strong></p>
+                <p>Il server non invia l'header HSTS, che impedisce il downgrade da HTTPS a HTTP.</p>
+                <p>Azione richiesta: aggiungere in Apache:</p>
+<div class="code-block">Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"</div>
+                <p>Richiede <code>mod_headers</code> abilitato.</p>
+
+                <p><strong>Punto 8 — Configurazione TLS/cipher</strong></p>
+                <p>Verificare che la configurazione TLS utilizzi solo cipher suite moderne e disabiliti protocolli obsoleti (TLS 1.0, 1.1).</p>
+                <p>Azione richiesta: verificare <code>SSLProtocol</code> e <code>SSLCipherSuite</code> nella configurazione Apache.</p>
+<div class="code-block">SSLProtocol all -SSLv3 -TLSv1 -TLSv1.1
+SSLCipherSuite ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384
+SSLHonorCipherOrder on</div>
+            </div>
+        </div>
+
+        <!-- Issue #82 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon yellow">2</div>
+                <div>
+                    <div class="card-title">Certificato SSL Namirial <span class="card-issue">#82</span></div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>Il codice Nexum contatta il server Namirial per la firma digitale dei contratti. Attualmente la verifica SSL è <strong>disabilitata</strong> nel codice perché il certificato del server Namirial non è valido.</p>
+
+                <p>Codice attuale in <code>NamirialApi.php</code> riga 62:</p>
+<div class="code-block">'ssl' => array(
+    'verify_peer' => false,
+    'verify_peer_name' => false,
+    'allow_self_signed' => true
+)</div>
+
+                <p>Questa è una "pezza" temporanea discussa con Mike a novembre 2025. Il certificato SSL del server Namirial deve essere valido e verificabile.</p>
+
+                <p><strong>Azione richiesta:</strong> verificare e correggere il certificato SSL sul server che risponde alle chiamate Namirial. Una volta confermato che il certificato è valido, comunicarcelo e noi rimuoviamo la pezza dal codice.</p>
+
+                <p><strong>Importante:</strong> non rimuoviamo il <code>verify_peer: false</code> senza conferma scritta che il certificato è stato fixato, altrimenti si rompe la firma digitale dei contratti.</p>
+            </div>
+        </div>
+
+        <!-- Issue #115 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon red">3</div>
+                <div>
+                    <div class="card-title">Headers HTTP non sicuri <span class="card-issue">#115</span></div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>Su <code>nexumapp.estendo.it</code> ci sono due problemi di headers HTTP segnalati nel security scan:</p>
+
+                <p><strong>Expires — Data non valida</strong></p>
+                <p>L'header Expires contiene <code>Fri, 01 Jan 1990 00:00:00 GMT</code> che non è un formato valido secondo RFC-7231. Deve essere nel formato <code>Sun, 06 Nov 1994 08:49:37 GMT</code>.</p>
+
+                <p><strong>Set-Cookie — Flag Secure mancante</strong></p>
+                <p>I cookie di sessione vengono inviati senza il flag <code>Secure</code>, il che significa che potrebbero essere trasmessi su connessioni non cifrate.</p>
+
+                <p>Azione richiesta: configurare Apache per forzare i flag di sicurezza sui cookie:</p>
+<div class="code-block"># Richiede mod_headers
+Header always edit Set-Cookie (.*) "$1; Secure; HttpOnly; SameSite=Lax"
+
+# Fix Expires header
+Header always set Expires "0"</div>
+
+                <p>Tool di verifica in tempo reale: <a href="https://securityheaders.com/?q=https://nexumapp.estendo.it" target="_blank" style="color: var(--blue);">securityheaders.com</a></p>
+            </div>
+        </div>
+
+        <!-- Done section -->
+        <div class="card" style="border-color: var(--green); border-left: 3px solid var(--green);">
+            <div class="card-header">
+                <div class="card-icon green">&#10003;</div>
+                <div>
+                    <div class="card-title">Fatto da noi (codice)</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p><strong>#66 Punto 1 — Password policy:</strong> alzata la lunghezza minima da 8 a 12 caratteri in tutti i punti di validazione (registrazione, reset password, profilo, admin).</p>
+                <p><strong>#66 Punto 5 — Moment.js:</strong> aggiornata la libreria alla versione senza vulnerabilita note.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="footer">
+    <div class="container">
+        Radar / netycom.it — Generato il 2026-03-03
+    </div>
+</div>
+
+</body>
+</html>

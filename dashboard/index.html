@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Radar</title>
+<title>Radar — Netycom</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -24,6 +24,7 @@ header { background: var(--surface); border-bottom: 2px solid var(--text); paddi
 .brand svg { width: 14px; height: 14px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
 h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: -.01em; }
 .subtitle { font-size: .78rem; color: var(--text-muted); margin-top: .25rem; }
+.stats { display: flex; gap: 2rem; margin-top: 1rem; font-size: .7rem; color: var(--text-muted); }
 main { padding: 2rem 0 4rem; }
 
 .project { display: flex; align-items: center; justify-content: space-between; padding: .75rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--text); }
@@ -36,6 +37,7 @@ main { padding: 2rem 0 4rem; }
 .verdict { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .v-green { color: var(--green); }
 .v-yellow { color: var(--yellow); }
+.v-red { color: var(--red); }
 
 .watermark { position: fixed; bottom: 1rem; right: 1.5rem; font-size: .62rem; color: var(--text-muted); letter-spacing: .04em; }
 .watermark a { color: var(--text-muted); text-decoration: none; }
@@ -48,6 +50,11 @@ main { padding: 2rem 0 4rem; }
     <div class="brand"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><line x1="12" y1="2" x2="12" y2="4"/></svg>Radar</div>
     <h1>Dashboard</h1>
     <p class="subtitle">Progetti monitorati e report di collaudo</p>
+    <div class="stats">
+        <span>2 progetti</span>
+        <span>6 report</span>
+        <span>ultimo: 2026-03-05</span>
+    </div>
 </div>
 </header>
 <main>
@@ -59,43 +66,13 @@ main { padding: 2rem 0 4rem; }
         </div>
         <div class="project-meta">
             <div class="verdict v-green">fixed</div>
-            <div class="project-runs">4 report</div>
+            <div class="project-runs">5 report</div>
         </div>
     </a>
-    <a class="project" href="../a3d/">
+    <a class="project" href="../inenergy/">
         <div>
-            <div class="project-name">A3D</div>
-            <div class="project-url">mule.a3d.it</div>
-        </div>
-        <div class="project-meta">
-            <div class="verdict v-yellow">issues</div>
-            <div class="project-runs">3 report</div>
-        </div>
-    </a>
-    <a class="project" href="../calia/">
-        <div>
-            <div class="project-name">Calia</div>
-            <div class="project-url">caliaitaliaoutlet.com</div>
-        </div>
-        <div class="project-meta">
-            <div class="verdict v-yellow">issues</div>
-            <div class="project-runs">1 report</div>
-        </div>
-    </a>
-    <a class="project" href="../digitag/">
-        <div>
-            <div class="project-name">DigiTag</div>
-            <div class="project-url">digitag.me</div>
-        </div>
-        <div class="project-meta">
-            <div class="verdict v-green">healthy</div>
-            <div class="project-runs">1 report</div>
-        </div>
-    </a>
-    <a class="project" href="../fasoli/">
-        <div>
-            <div class="project-name">Fasoli Piante</div>
-            <div class="project-url">fasolipiante.com</div>
+            <div class="project-name">iNenergy</div>
+            <div class="project-url">in-energy.it</div>
         </div>
         <div class="project-meta">
             <div class="verdict v-yellow">issues</div>
@@ -105,16 +82,5 @@ main { padding: 2rem 0 4rem; }
 </div>
 </main>
 <div class="watermark"><a href="https://netycom.it">netycom.it</a></div>
-
-<script>
-// Gate predisposta: quando attiva, aggiungere #key=HASH all'URL per bypassare
-// Per ora tutto aperto
-(function(){
-    var hash = window.location.hash;
-    if (hash.startsWith('#key=')) {
-        sessionStorage.setItem('radar-auth', hash.slice(5));
-    }
-})();
-</script>
 </body>
 </html>

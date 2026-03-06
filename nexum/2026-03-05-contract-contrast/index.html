@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Radar — Nexum / Contrasto Paginazione e CSV</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #f8fafc; --surface: #ffffff; --surface-alt: #f1f5f9;
+    --border: #e2e8f0; --accent: #6366f1; --accent-light: rgba(99,102,241,.08);
+    --green: #10b981; --green-bg: rgba(16,185,129,.08);
+    --yellow: #f59e0b; --yellow-bg: rgba(245,158,11,.08);
+    --red: #ef4444; --red-bg: rgba(239,68,68,.08);
+    --text: #0f172a; --text-secondary: #475569; --text-muted: #94a3b8;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', -apple-system, sans-serif;
+    --radius: 10px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height:1.7; font-size:15px; }
+
+.header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 2rem 0; }
+.container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+.brand { font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: .5rem; }
+.title { font-size: 1.5rem; font-weight: 700; margin-bottom: .25rem; }
+.subtitle { font-size: .9rem; color: var(--text-secondary); }
+.meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: .8rem; color: var(--text-muted); margin-top: .75rem; }
+
+.score-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; margin: 1.5rem 0; display: flex; align-items: center; gap: 2rem; }
+.score-circle { width: 80px; height: 80px; position: relative; flex-shrink: 0; }
+.score-circle svg { transform: rotate(-90deg); }
+.score-circle .bg { stroke: #e2e8f0; }
+.score-circle .fg { stroke-linecap: round; transition: stroke-dashoffset .5s; }
+.score-number { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 1.4rem; font-weight: 700; }
+.score-text h2 { font-size: 1.1rem; margin-bottom: .25rem; }
+.score-text p { color: var(--text-secondary); font-size: .9rem; }
+
+.tabs { display: flex; gap: 0; margin: 1.5rem 0 0; border-bottom: 2px solid var(--border); }
+.tab { padding: .75rem 1.25rem; font-size: .85rem; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; color: var(--text-muted); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1rem 0; }
+.card-header { display: flex; align-items: center; gap: .75rem; margin-bottom: .75rem; }
+.card-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .85rem; flex-shrink: 0; }
+.card-icon.green { background: var(--green-bg); color: var(--green); }
+.card-icon.yellow { background: var(--yellow-bg); color: var(--yellow); }
+.card-title { font-weight: 600; font-size: .95rem; }
+.card-body { font-size: .88rem; color: var(--text-secondary); }
+.card-body p { margin-bottom: .5rem; }
+
+.screenshot { border-radius: 6px; border: 1px solid var(--border); max-width: 100%; margin: 1rem 0; }
+.screenshot-caption { font-size: .78rem; color: var(--text-muted); margin-top: .25rem; }
+
+.before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+.before-after .ba-item { text-align: center; }
+.before-after .ba-label { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .5rem; }
+.before-after .ba-label.before { color: var(--red); }
+.before-after .ba-label.after { color: var(--green); }
+.before-after img { border-radius: 6px; border: 1px solid var(--border); max-width: 100%; }
+
+.code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 6px; font-family: var(--mono); font-size: .78rem; line-height: 1.8; overflow-x: auto; margin: .75rem 0; white-space: pre-wrap; }
+
+.footer { padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 2rem; font-size: .75rem; color: var(--text-muted); text-align: center; }
+
+@media (max-width: 640px) {
+    .score-card { flex-direction: column; text-align: center; }
+    .meta-row { flex-direction: column; gap: .5rem; }
+    .before-after { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="container">
+        <div class="brand">Radar / netycom.it</div>
+        <div class="title">Nexum — Contrasto Paginazione e Bottone CSV</div>
+        <div class="subtitle">La paginazione e il pulsante di esportazione nella pagina contratti erano illeggibili: testo scuro su sfondo scuro.</div>
+        <div class="meta-row">
+            <span>Target: estendo.sel.re/contract</span>
+            <span>Scenario: Bug fix</span>
+            <span>Data: 2026-03-05</span>
+            <span>Iterazioni: 2</span>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- Score -->
+    <div class="score-card">
+        <div class="score-circle">
+            <svg width="80" height="80" viewBox="0 0 80 80">
+                <circle class="bg" cx="40" cy="40" r="34" fill="none" stroke-width="6"/>
+                <circle class="fg" cx="40" cy="40" r="34" fill="none" stroke-width="6"
+                    stroke="var(--green)" stroke-dasharray="213.6" stroke-dashoffset="0"/>
+            </svg>
+            <div class="score-number">100</div>
+        </div>
+        <div class="score-text">
+            <h2>Tutto risolto</h2>
+            <p>La paginazione e il pulsante di esportazione ora si leggono correttamente. I numeri di pagina e l'icona CSV hanno il contrasto giusto rispetto allo sfondo.</p>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('eli5')">Cosa abbiamo fatto</div>
+        <div class="tab" onclick="switchTab('tech')">Dettagli tecnici</div>
+    </div>
+
+    <!-- ELI5 Tab -->
+    <div class="tab-content active" id="tab-eli5">
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon green">&#10003;</div>
+                <div class="card-title">Corretti i numeri di pagina</div>
+            </div>
+            <div class="card-body">
+                <p>In fondo alla lista contratti, i numeri per sfogliare le pagine (1, 2, 3...) erano praticamente invisibili: testo grigio scuro su sfondo nero. Il numero della pagina corrente era il peggiore &mdash; non si vedeva proprio.</p>
+                <p>Ora la pagina corrente ha testo bianco su sfondo scuro (ben visibile), e gli altri numeri sono scuri su sfondo bianco (leggibili normalmente).</p>
+                <div class="before-after">
+                    <div class="ba-item">
+                        <div class="ba-label before">Prima</div>
+                        <img src="04-pagination-closeup.png" alt="Paginazione prima: numeri quasi invisibili">
+                    </div>
+                    <div class="ba-item">
+                        <div class="ba-label after">Dopo</div>
+                        <img src="after-03-pagination-closeup.png" alt="Paginazione dopo: numeri leggibili">
+                    </div>
+                </div>
+                <div class="screenshot-caption">A sinistra i numeri di pagina erano illeggibili (grigio su nero). A destra, dopo la correzione, il numero attivo è bianco su nero e gli altri sono scuri su bianco.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon green">&#10003;</div>
+                <div class="card-title">Corretta l'icona del pulsante di esportazione</div>
+            </div>
+            <div class="card-body">
+                <p>Il pulsante per scaricare la lista contratti in formato CSV (il file con l'icona &ldquo;salva&rdquo;) aveva l'icona dello stesso colore dello sfondo del bottone &mdash; si vedeva appena.</p>
+                <p>Ora l'icona eredita il colore chiaro del bottone, quindi si vede chiaramente su sfondo grigio scuro.</p>
+                <div class="before-after">
+                    <div class="ba-item">
+                        <div class="ba-label before">Prima</div>
+                        <img src="06-csv-closeup.png" alt="Bottone CSV prima: icona poco visibile">
+                    </div>
+                    <div class="ba-item">
+                        <div class="ba-label after">Dopo</div>
+                        <img src="after-05-csv-closeup.png" alt="Bottone CSV dopo: icona visibile">
+                    </div>
+                </div>
+                <div class="screenshot-caption">Il pulsante di esportazione CSV prima e dopo la correzione del contrasto dell'icona.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon green">&#10003;</div>
+                <div class="card-title">Vista complessiva della pagina</div>
+            </div>
+            <div class="card-body">
+                <p>Ecco come appare la pagina contratti nella sua interezza dopo le correzioni.</p>
+                <img src="after-02-pagination-area.png" alt="Pagina contratti dopo il fix" class="screenshot">
+                <div class="screenshot-caption">La pagina contratti con paginazione e bottone CSV corretti.</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Tech Tab -->
+    <div class="tab-content" id="tab-tech">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Riepilogo tecnico</div>
+            </div>
+            <div class="card-body">
+                <p><strong>Server:</strong> Cloudways Athena (staging)</p>
+                <p><strong>File:</strong> resources/views/components/layouts/head-style.blade.php</p>
+                <p><strong>Causa root:</strong> Il tema greyscale usa <code>--color-green: #111</code> (quasi nero) come colore accent. I selettori CSS della paginazione usano <code>var(--color-green)</code> per il testo, risultando in testo nero su sfondo bianco (accettabile) e testo grigio su sfondo nero per la pagina attiva (illeggibile).</p>
+                <p><strong>Specificit&agrave;:</strong> Il selettore <code>#app-body span</code> (specificit&agrave; alta) sovrascriveva il <code>color: #fff</code> di <code>.page-link.active</code>, forzando <code>color: #3d4f5f</code> (grigio scuro) su sfondo <code>#111</code> (quasi nero).</p>
+
+                <p><strong>Valori prima del fix:</strong></p>
+<div class="code-block">/* Paginazione attiva — PRIMA */
+.page-link.active:  color=rgb(61, 79, 95)  bg=rgb(17, 17, 17)   ← ILLEGGIBILE
+.page-link normal:  color=rgb(17, 17, 17)  bg=rgb(255, 255, 255) ← ok ma al limite
+.page-link disabled: color=rgb(61, 79, 95) bg=transparent
+
+/* Bottone CSV — PRIMA */
+btn-quiet:          color=rgb(245, 245, 245) bg=rgb(77, 77, 77)
+icon (span):        color=rgb(61, 79, 95)    ← sovrascritta da #app-body span</div>
+
+                <p><strong>Valori dopo il fix:</strong></p>
+<div class="code-block">/* Paginazione attiva — DOPO */
+.page-link.active:  color=rgb(255, 255, 255) bg=rgb(17, 17, 17)  ← BIANCO SU NERO ✓
+.page-link normal:  color=rgb(51, 51, 51)    bg=rgb(255, 255, 255) ← SCURO SU BIANCO ✓
+.page-link disabled: color=rgb(153, 153, 153) bg=transparent       ← GRIGIO ✓
+
+/* Bottone CSV — DOPO */
+btn-quiet:          color=rgb(245, 245, 245) bg=rgb(77, 77, 77)
+icon (span):        color=rgb(245, 245, 245) ← eredita dal bottone ✓</div>
+
+                <p><strong>Fix applicato:</strong></p>
+<div class="code-block">/* Pagination active: force white text on dark bg */
+.page-link.active,
+.active > .page-link,
+.page-item.active .page-link {
+    color: #fff !important;
+}
+
+/* Pagination normal links: readable on white bg */
+.page-link {
+    color: #333 !important;
+}
+.page-link:hover {
+    color: #111 !important;
+    background-color: #eee;
+}
+
+/* Disabled pagination: lighter grey */
+.page-item.disabled .page-link {
+    color: #999 !important;
+}
+
+/* CSV button icon: inherit button color */
+.btn.btn-quiet .material-symbols-outlined,
+.btn.btn-quiet .icon,
+.btn.btn-quiet span {
+    color: inherit !important;
+}</div>
+
+                <p><strong>Variabili CSS custom (da .env):</strong></p>
+<div class="code-block">APP_COLOR_GREEN="#111"        → --color-green (accent, quasi nero)
+APP_COLOR_GREEN_DEEP="#111"  → --color-green-deep
+APP_COLOR_TEXT="#3d4f5f"      → --color-text (grigio scuro)
+APP_COLOR_GREY non settato   → --color-grey: #fafafa (default)</div>
+
+                <p><strong>Nota:</strong> Il fix usa <code>!important</code> per vincere la specificit&agrave; del selettore <code>#app-body span</code>. La soluzione definitiva sarebbe consolidare tutto in SCSS con specificit&agrave; corretta (TODO esistente).</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    <div class="container">
+        Radar / netycom.it &mdash; Generato il 2026-03-05
+    </div>
+</div>
+
+<script>
+function switchTab(id) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

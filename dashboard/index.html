@@ -17,7 +17,6 @@
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family: var(--mono); background: var(--bg); color: var(--text); line-height:1.65; font-size:14px; }
-
 header { background: var(--surface); border-bottom: 2px solid var(--text); padding: 2.5rem 0 2rem; }
 .container { max-width: 860px; margin:0 auto; padding:0 2rem; }
 .brand { font-size: .65rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .75rem; display: flex; align-items: center; gap: .5rem; }
@@ -26,7 +25,6 @@ h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: -.01em; }
 .subtitle { font-size: .78rem; color: var(--text-muted); margin-top: .25rem; }
 .stats { display: flex; gap: 2rem; margin-top: 1rem; font-size: .7rem; color: var(--text-muted); }
 main { padding: 2rem 0 4rem; }
-
 .project { display: flex; align-items: center; justify-content: space-between; padding: .75rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--text); }
 .project:first-child { border-top: 1px solid var(--border); }
 .project:hover { background: rgba(0,0,0,.015); }
@@ -38,7 +36,6 @@ main { padding: 2rem 0 4rem; }
 .v-green { color: var(--green); }
 .v-yellow { color: var(--yellow); }
 .v-red { color: var(--red); }
-
 .watermark { position: fixed; bottom: 1rem; right: 1.5rem; font-size: .62rem; color: var(--text-muted); letter-spacing: .04em; }
 .watermark a { color: var(--text-muted); text-decoration: none; }
 .watermark a:hover { color: var(--text-secondary); }
@@ -51,14 +48,24 @@ main { padding: 2rem 0 4rem; }
     <h1>Dashboard</h1>
     <p class="subtitle">Progetti monitorati e report di collaudo</p>
     <div class="stats">
-        <span>2 progetti</span>
-        <span>6 report</span>
-        <span>ultimo: 2026-03-05</span>
+        <span>3 progetti</span>
+        <span>7 report</span>
+        <span>ultimo: 2026-03-06</span>
     </div>
 </div>
 </header>
 <main>
 <div class="container">
+    <a class="project" href="../netycom/">
+        <div>
+            <div class="project-name">Netycom</div>
+            <div class="project-url">netycom.it</div>
+        </div>
+        <div class="project-meta">
+            <div class="verdict v-red">issues</div>
+            <div class="project-runs">1 report</div>
+        </div>
+    </a>
     <a class="project" href="../nexum/">
         <div>
             <div class="project-name">Nexum</div>

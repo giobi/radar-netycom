@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Radar — Netycom / SEO Audit</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #f8fafc; --surface: #ffffff; --surface-alt: #f1f5f9;
+    --border: #e2e8f0; --accent: #6366f1; --accent-light: rgba(99,102,241,.08);
+    --green: #10b981; --green-bg: rgba(16,185,129,.08);
+    --yellow: #f59e0b; --yellow-bg: rgba(245,158,11,.08);
+    --red: #ef4444; --red-bg: rgba(239,68,68,.08);
+    --text: #0f172a; --text-secondary: #475569; --text-muted: #94a3b8;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', -apple-system, sans-serif;
+    --radius: 10px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height:1.7; font-size:15px; }
+
+.header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 2rem 0; }
+.container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+.brand { font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: .5rem; }
+.title { font-size: 1.5rem; font-weight: 700; margin-bottom: .25rem; }
+.subtitle { font-size: .9rem; color: var(--text-secondary); }
+.meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: .8rem; color: var(--text-muted); margin-top: .75rem; }
+
+.score-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; margin: 1.5rem 0; display: flex; align-items: center; gap: 2rem; }
+.score-ring { position: relative; width: 100px; height: 100px; flex-shrink: 0; }
+.score-ring svg { width: 100px; height: 100px; transform: rotate(-90deg); }
+.score-ring .bg { fill: none; stroke: #e2e8f0; stroke-width: 8; }
+.score-ring .fg { fill: none; stroke-width: 8; stroke-linecap: round; }
+.score-number { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 1.6rem; font-weight: 700; }
+.score-number small { font-size: .7em; color: var(--text-muted); }
+.score-text h2 { font-size: 1.1rem; margin-bottom: .25rem; }
+.score-text p { color: var(--text-secondary); font-size: .9rem; }
+
+.tabs { display: flex; gap: 0; margin: 1.5rem 0 0; border-bottom: 2px solid var(--border); }
+.tab { padding: .75rem 1.25rem; font-size: .85rem; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; color: var(--text-muted); transition: all .2s; }
+.tab:hover { color: var(--text-secondary); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-content { display: none; padding-top: 1rem; }
+.tab-content.active { display: block; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1rem 0; }
+.card-header { display: flex; align-items: center; gap: .75rem; margin-bottom: .75rem; }
+.card-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .85rem; flex-shrink: 0; }
+.card-icon.green { background: var(--green-bg); color: var(--green); }
+.card-icon.yellow { background: var(--yellow-bg); color: var(--yellow); }
+.card-icon.red { background: var(--red-bg); color: var(--red); }
+.card-title { font-weight: 600; font-size: .95rem; }
+.card-body { font-size: .88rem; color: var(--text-secondary); line-height: 1.7; }
+.card-body p { margin-bottom: .5rem; }
+.card-body ul { margin: .5rem 0; padding-left: 1.2rem; }
+.card-body li { margin-bottom: .3rem; }
+
+.code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 6px; font-family: var(--mono); font-size: .78rem; line-height: 1.8; overflow-x: auto; margin: .75rem 0; white-space: pre-wrap; }
+
+.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; margin: .75rem 0; }
+.data-table th { text-align: left; font-weight: 600; padding: .5rem .75rem; border-bottom: 2px solid var(--border); font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); }
+.data-table td { padding: .5rem .75rem; border-bottom: 1px solid var(--border); }
+.data-table tr:last-child td { border-bottom: none; }
+
+.badge { display: inline-block; padding: .15rem .5rem; border-radius: 4px; font-size: .72rem; font-weight: 600; }
+.badge-red { background: var(--red-bg); color: var(--red); }
+.badge-yellow { background: var(--yellow-bg); color: var(--yellow); }
+.badge-green { background: var(--green-bg); color: var(--green); }
+
+.footer { padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 2rem; font-size: .75rem; color: var(--text-muted); text-align: center; }
+
+@media (max-width: 640px) {
+    .score-card { flex-direction: column; text-align: center; }
+    .meta-row { flex-direction: column; gap: .5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="container">
+        <div class="brand">📡 Radar</div>
+        <div class="title">Netycom / SEO Audit</div>
+        <div class="subtitle">Analisi completa della presenza SEO di netycom.it</div>
+        <div class="meta-row">
+            <span>📅 2026-03-06</span>
+            <span>🎯 netycom.it</span>
+            <span>📋 SEO Audit</span>
+            <span>🔧 8 pagine analizzate</span>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="score-card">
+        <div class="score-ring">
+            <svg viewBox="0 0 100 100">
+                <circle class="bg" cx="50" cy="50" r="42"/>
+                <circle class="fg" cx="50" cy="50" r="42" stroke="var(--red)" stroke-dasharray="264" stroke-dashoffset="171"/>
+            </svg>
+            <div class="score-number">35<small>/100</small></div>
+        </div>
+        <div class="score-text">
+            <h2>Problemi significativi</h2>
+            <p>Il sito presenta carenze strutturali importanti dal punto di vista SEO: redirect chain, assenza di sitemap e robots.txt, zero Schema markup, contenuto insufficiente in homepage.</p>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab(0)">👀 Cosa abbiamo trovato</div>
+        <div class="tab" onclick="switchTab(1)">🔧 Dettagli tecnici</div>
+    </div>
+
+    <div class="tab-content active" id="tab-0">
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon red">❌</div>
+                <div class="card-title">Il sito fa 4 rimbalzi prima di rispondere</div>
+            </div>
+            <div class="card-body">
+                <p>Quando qualcuno digita netycom.it, il browser viene rimbalzato 4 volte prima di arrivare alla pagina. Ogni rimbalzo rallenta il caricamento e fa perdere punti agli occhi di Google.</p>
+                <p>La soluzione è semplice: un unico reindirizzamento diretto alla versione corretta del sito.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon red">❌</div>
+                <div class="card-title">Google non ha una mappa del sito</div>
+            </div>
+            <div class="card-body">
+                <p>Mancano sia la sitemap (la lista delle pagine da indicizzare) che il file robots.txt (le istruzioni per i motori di ricerca). In pratica Google deve arrangiarsi da solo a capire cosa c'è nel sito.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon red">❌</div>
+                <div class="card-title">Nessuna informazione strutturata per Google</div>
+            </div>
+            <div class="card-body">
+                <p>Il sito non dice a Google informazioni base come indirizzo, telefono, orari, tipo di attività. Questo significa che nelle ricerche tipo "web agency Verbania" non comparirà mai con il riquadro informativo sulla destra dei risultati.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon yellow">⚠️</div>
+                <div class="card-title">La homepage ha poco testo</div>
+            </div>
+            <div class="card-body">
+                <p>Solo 415 parole in homepage, quando il minimo consigliato è 600-800. E la parola "agenzia" non compare mai — eppure è una delle ricerche principali per trovare un servizio come il vostro.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon yellow">⚠️</div>
+                <div class="card-title">Le condivisioni social non hanno anteprima</div>
+            </div>
+            <div class="card-body">
+                <p>Quando qualcuno condivide il sito su Facebook, LinkedIn o WhatsApp, non appare nessuna anteprima con immagine e descrizione. Il link risulta anonimo e poco invitante da cliccare.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon yellow">⚠️</div>
+                <div class="card-title">Alcuni link nel portfolio sono rotti</div>
+            </div>
+            <div class="card-body">
+                <p>Nella sezione portfolio ci sono 6 link con problemi: uno completamente morto, uno che dà errore, e altri che puntano alla versione non sicura (http invece di https).</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon green">✅</div>
+                <div class="card-title">Certificato di sicurezza attivo</div>
+            </div>
+            <div class="card-body">
+                <p>Il sito ha il lucchetto verde (HTTPS) con certificato valido fino a maggio 2026. Google Analytics e Tag Manager sono configurati correttamente. Il consenso cookie GDPR con Iubenda è presente.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="tab-content" id="tab-1">
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon red">🔧</div>
+                <div class="card-title">Riepilogo tecnico</div>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <tr><td><strong>Server</strong></td><td>Apache/2.4.66 (Debian)</td></tr>
+                    <tr><td><strong>Tech</strong></td><td>HTML statico, Bootstrap 3.3.4, jQuery 3.2.0 + 1.11.2</td></tr>
+                    <tr><td><strong>SSL</strong></td><td>Let's Encrypt R13, scade 2026-05-20</td></tr>
+                    <tr><td><strong>Zoom Authority</strong></td><td>14/100</td></tr>
+                    <tr><td><strong>Keyword indicizzate</strong></td><td>76 (20 in top 10)</td></tr>
+                    <tr><td><strong>Traffico stimato</strong></td><td>15-16 visite/mese</td></tr>
+                    <tr><td><strong>Scenario</strong></td><td>SEO Audit</td></tr>
+                    <tr><td><strong>Verdict</strong></td><td><span class="badge badge-red">ISSUES</span></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon red">🔧</div>
+                <div class="card-title">Redirect chain (4 hop)</div>
+            </div>
+            <div class="card-body">
+                <div class="code-block">http://netycom.it/
+  → 301 → https://netycom.it/
+  → 301 → http://www.netycom.it/      ← TORNA A HTTP
+  → 301 → https://www.netycom.it/</div>
+                <p>Fix: singolo 301 in Apache da qualsiasi variante a https://www.netycom.it</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon red">🔧</div>
+                <div class="card-title">jQuery caricato due volte</div>
+            </div>
+            <div class="card-body">
+                <div class="code-block">HEAD: jquery-3.2.0.min.js (85 KB)
+BODY: jquery-1.11.2.min.js (95 KB)
+
++ Bootstrap 3.3.4 + Foundation 5.5.2 (due CSS framework in conflitto)</div>
+                <p>La seconda versione sovrascrive la prima. Due framework CSS simultanei aggiungono ~200KB inutili.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon yellow">🔧</div>
+                <div class="card-title">SEOZoom — Visibilità organica</div>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <tr><th>Metrica</th><th>Valore</th></tr>
+                    <tr><td>Zoom Authority</td><td>14/100</td></tr>
+                    <tr><td>Trust</td><td>17/100</td></tr>
+                    <tr><td>Stability</td><td>13/100</td></tr>
+                    <tr><td>Keyword totali</td><td>76</td></tr>
+                    <tr><td>Top 10</td><td>20 keyword</td></tr>
+                    <tr><td>Top 3</td><td>8 keyword</td></tr>
+                    <tr><td>Traffico stimato</td><td>15-16 visite/mese</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon yellow">🔧</div>
+                <div class="card-title">Keyword density homepage</div>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <tr><th>Keyword</th><th>Occorrenze</th><th>Note</th></tr>
+                    <tr><td>web</td><td>6x</td><td></td></tr>
+                    <tr><td>marketing</td><td>5x</td><td></td></tr>
+                    <tr><td>netycom</td><td>4x</td><td></td></tr>
+                    <tr><td>verbania</td><td>3x</td><td>Insufficiente per local SEO</td></tr>
+                    <tr><td>agenzia</td><td>0x</td><td><span class="badge badge-red">ASSENTE</span></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon yellow">🔧</div>
+                <div class="card-title">Link portfolio con problemi</div>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <tr><th>URL</th><th>Status</th></tr>
+                    <tr><td>startup.registroimprese.it</td><td><span class="badge badge-red">MORTO</span></td></tr>
+                    <tr><td>www.estendo.it</td><td><span class="badge badge-red">403 Forbidden</span></td></tr>
+                    <tr><td>www.mariniqg.it</td><td><span class="badge badge-yellow">HTTP</span></td></tr>
+                    <tr><td>www.museodelpaesaggio.it</td><td><span class="badge badge-yellow">HTTP</span></td></tr>
+                    <tr><td>www.illagomaggiore.com</td><td><span class="badge badge-yellow">HTTP</span></td></tr>
+                    <tr><td>www.enricaborghi.com</td><td><span class="badge badge-yellow">HTTP</span></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon green">🔧</div>
+                <div class="card-title">Action items prioritizzati</div>
+            </div>
+            <div class="card-body">
+                <p><strong>Critici:</strong></p>
+                <ul>
+                    <li>Fix redirect chain Apache: singolo 301 a https://www.netycom.it</li>
+                    <li>Aggiungere Schema JSON-LD LocalBusiness</li>
+                    <li>Rimuovere jQuery duplicato, aggiornare Bootstrap v5, eliminare Foundation</li>
+                    <li>Espandere homepage a 800+ parole con keyword "agenzia web Verbania"</li>
+                    <li>Aggiungere OG tags e Twitter Card</li>
+                </ul>
+                <p><strong>Importanti:</strong></p>
+                <ul>
+                    <li>Creare sitemap.xml e robots.txt</li>
+                    <li>Aggiungere canonical tag</li>
+                    <li>Fix link portfolio rotti/HTTP</li>
+                    <li>Fix heading H3 duplicati</li>
+                    <li>Rimuovere user-scalable=no dal viewport</li>
+                </ul>
+                <p><strong>Miglioramenti:</strong></p>
+                <ul>
+                    <li>Avviare blog (1-2 articoli/mese)</li>
+                    <li>Alt text alle 3 immagini mancanti</li>
+                    <li>Aggiungere defer ai script render-blocking</li>
+                    <li>Header di sicurezza HSTS, X-Frame-Options</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="footer">
+    <div class="container">📡 Radar · <a href="https://netycom.it" style="color:inherit">netycom.it</a> · Generato il 2026-03-06</div>
+</div>
+
+<script>
+function switchTab(n) {
+    document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i===n));
+    document.querySelectorAll('.tab-content').forEach((c,i) => c.classList.toggle('active', i===n));
+}
+</script>
+</body>
+</html>

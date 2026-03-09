@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Radar — Nexum DIMO: Contratto fantasma Benedetta Sibona</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #fafaf9; --surface: #ffffff; --surface-alt: #f5f5f4;
+    --border: #e5e5e0; --border-strong: #d0d0c8;
+    --green: #15803d; --green-bg: rgba(21,128,61,.06);
+    --yellow: #854d0e; --yellow-bg: rgba(133,77,14,.06);
+    --red: #b91c1c; --red-bg: rgba(185,28,28,.06);
+    --blue: #1d4ed8; --blue-bg: rgba(29,78,216,.06);
+    --text: #1c1917; --text-secondary: #57534e; --text-muted: #a8a29e;
+    --mono: 'IBM Plex Mono', 'SFMono-Regular', 'Consolas', monospace;
+    --radius: 3px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: var(--mono); background: var(--bg); color: var(--text); line-height:1.7; font-size:14px; }
+
+.header { background: var(--surface); border-bottom: 2px solid var(--text); padding: 2rem 0 1.75rem; }
+.container { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; }
+.brand { font-size: .65rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .75rem; display: flex; align-items: center; gap: .5rem; }
+.brand svg { width: 14px; height: 14px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+.brand a { color: var(--text-muted); text-decoration: none; }
+.title { font-size: 1.3rem; font-weight: 700; margin-bottom: .35rem; letter-spacing: -.01em; }
+.meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: .75rem; color: var(--text-secondary); }
+.meta-item { display: flex; align-items: center; gap: .35rem; }
+.meta-item svg { width: 13px; height: 13px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+
+.score-section { padding: 2rem 0; }
+.score-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; display: flex; align-items: center; gap: 2rem; }
+.score-ring { position: relative; width: 100px; height: 100px; flex-shrink: 0; }
+.score-ring svg { transform: rotate(-90deg); }
+.score-ring .track { fill: none; stroke: var(--surface-alt); stroke-width: 6; }
+.score-ring .fill { fill: none; stroke-width: 6; stroke-linecap: round; }
+.score-number { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 1.6rem; font-weight: 700; }
+.score-number small { font-size: .75rem; font-weight: 400; color: var(--text-muted); }
+.score-summary h2 { font-size: .95rem; font-weight: 600; margin-bottom: .35rem; }
+.score-summary p { font-size: .82rem; color: var(--text-secondary); line-height: 1.75; }
+
+.tabs { padding: 1.25rem 0 0; }
+.tab-buttons { display: flex; gap: 0; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border); }
+.tab-btn { padding: .6rem 1.2rem; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; background: none; font-family: var(--mono); font-size: .75rem; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: .4rem; }
+.tab-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tab-btn:hover { color: var(--text-secondary); }
+.tab-btn.active { color: var(--text); border-bottom-color: var(--text); font-weight: 600; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.step { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: .75rem; }
+.step-header { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; }
+.step-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step-icon svg { width: 12px; height: 12px; stroke-width: 2.5; fill: none; }
+.step-icon.ok { background: var(--green-bg); }
+.step-icon.ok svg { stroke: var(--green); }
+.step-icon.warn { background: var(--yellow-bg); }
+.step-icon.warn svg { stroke: var(--yellow); }
+.step-icon.fail { background: var(--red-bg); }
+.step-icon.fail svg { stroke: var(--red); }
+.step-icon.info { background: var(--blue-bg); }
+.step-icon.info svg { stroke: var(--blue); }
+.step-title { font-weight: 600; font-size: .85rem; }
+.step-explain { font-size: .82rem; color: var(--text-secondary); margin-bottom: .75rem; line-height: 1.8; }
+
+.tech-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: .75rem; }
+.tech-section h3 { font-size: .78rem; font-weight: 600; margin-bottom: .75rem; letter-spacing: .02em; display: flex; align-items: center; gap: .4rem; }
+.tech-section h3 svg { width: 13px; height: 13px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+.log-block { background: #1c1917; color: #d6d3d1; padding: 1rem 1.25rem; border-radius: var(--radius); font-size: .75rem; line-height: 1.9; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+.tech-table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+.tech-table th { text-align: left; font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); padding: .4rem 0; border-bottom: 1px solid var(--border); }
+.tech-table td { padding: .4rem 0; border-bottom: 1px solid var(--surface-alt); }
+.tech-table td:first-child { font-weight: 500; color: var(--text-muted); width: 180px; }
+.tech-table code { background: var(--surface-alt); padding: .1rem .3rem; border-radius: 2px; font-size: .75rem; }
+
+.timeline { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; }
+.timeline h3 { font-size: .78rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: .02em; display: flex; align-items: center; gap: .4rem; }
+.timeline h3 svg { width: 13px; height: 13px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+.tl { position: relative; padding-left: 1.5rem; }
+.tl::before { content: ''; position: absolute; left: 5px; top: 4px; bottom: 4px; width: 1px; background: var(--border-strong); }
+.tl-item { position: relative; margin-bottom: .75rem; display: flex; align-items: baseline; gap: .75rem; }
+.tl-item:last-child { margin-bottom: 0; }
+.tl-dot { position: absolute; left: -1.5rem; top: 6px; width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--border-strong); background: var(--surface); flex-shrink: 0; }
+.tl-dot.red { border-color: var(--red); background: var(--red-bg); }
+.tl-dot.yellow { border-color: var(--yellow); background: var(--yellow-bg); }
+.tl-dot.green { border-color: var(--green); background: var(--green-bg); }
+.tl-dot.blue { border-color: var(--blue); background: var(--blue-bg); }
+.tl-time { font-size: .72rem; font-weight: 600; color: var(--text-muted); min-width: 65px; flex-shrink: 0; }
+.tl-text { font-size: .8rem; color: var(--text-secondary); }
+.tl-duration { display: inline-block; margin-top: .5rem; padding: .2rem .5rem; background: var(--yellow-bg); color: var(--yellow); font-size: .68rem; font-weight: 600; border-radius: 2px; letter-spacing: .03em; }
+
+.data-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: .75rem; }
+.data-card h3 { font-size: .78rem; font-weight: 600; margin-bottom: .75rem; letter-spacing: .02em; }
+.data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem 2rem; }
+.data-item { display: flex; flex-direction: column; padding: .3rem 0; border-bottom: 1px solid var(--surface-alt); }
+.data-label { font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); }
+.data-value { font-size: .82rem; font-weight: 500; }
+.data-value.highlight { color: var(--red); font-weight: 600; }
+.data-value.ok { color: var(--green); }
+
+.watermark { position: fixed; bottom: 1rem; right: 1.5rem; font-size: .62rem; color: var(--text-muted); letter-spacing: .04em; }
+.watermark a { color: var(--text-muted); text-decoration: none; }
+.watermark a:hover { color: var(--text-secondary); }
+
+.alert-box { border: 2px solid var(--red); background: var(--red-bg); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+.alert-box h3 { color: var(--red); font-size: .85rem; font-weight: 700; margin-bottom: .5rem; }
+.alert-box p { font-size: .82rem; color: var(--text-secondary); line-height: 1.8; }
+.alert-box ul { font-size: .82rem; color: var(--text-secondary); line-height: 1.8; padding-left: 1.2rem; margin-top: .3rem; }
+
+.action-box { border: 2px solid var(--yellow); background: var(--yellow-bg); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: .75rem; }
+.action-box h3 { color: var(--yellow); font-size: .85rem; font-weight: 700; margin-bottom: .5rem; }
+.action-box ol { font-size: .82rem; color: var(--text-secondary); line-height: 2; padding-left: 1.2rem; }
+
+@media (max-width: 640px) {
+    .score-card { flex-direction: column; text-align: center; }
+    .meta-row { flex-direction: column; gap: .4rem; }
+    .data-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="container">
+    <div class="brand">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <a href="https://radar.netycom.it/nexum/">Radar</a> / <a href="https://radar.netycom.it/nexum/">Nexum</a> / DIMO
+    </div>
+    <h1 class="title">Contratto fantasma &mdash; Benedetta Sibona</h1>
+    <div class="meta-row">
+        <span class="meta-item">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            9 marzo 2026
+        </span>
+        <span class="meta-item">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            nexumapp.dimo.estendo.it
+        </span>
+        <span class="meta-item">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Diagnosi database
+        </span>
+        <span class="meta-item">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Segnalazione Ilaria Gobbi
+        </span>
+    </div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- SCORE -->
+<div class="score-section">
+<div class="score-card">
+    <div class="score-ring">
+        <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle class="track" cx="50" cy="50" r="42"/>
+            <circle class="fill" cx="50" cy="50" r="42"
+                stroke="var(--red)" stroke-dasharray="264" stroke-dashoffset="211"/>
+        </svg>
+        <div class="score-number" style="color:var(--red)">20<small>/100</small></div>
+    </div>
+    <div class="score-summary">
+        <h2>Vendita completata ma contratto perso</h2>
+        <p>La vendita del 17 dicembre 2025 &egrave; stata portata a termine (pagamento approvato, contratto Estendo creato, abbonamento Zuora attivo), ma il record del contratto &egrave; stato cancellato da una pulizia automatica. I dati non sono arrivati alla piattaforma n&eacute; a Namirial per l'archiviazione. Tutti i dati sono recuperabili dai metadati rimasti nel database.</p>
+    </div>
+</div>
+</div>
+
+<!-- TIMELINE -->
+<div class="timeline">
+<h3>
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Cronologia degli eventi
+</h3>
+<div class="tl">
+    <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">17/12 12:05</span><span class="tl-text">Creazione cliente #99 (primo inserimento dati anagrafici)</span></div>
+    <div class="tl-item"><div class="tl-dot yellow"></div><span class="tl-time">17/12 12:14</span><span class="tl-text">Inizio contratto #293 (primo tentativo &mdash; rimasto incompleto, 35 metadati)</span></div>
+    <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">17/12 12:15</span><span class="tl-text">Creazione cliente #100 (reinserimento, probabilmente secondo tentativo)</span></div>
+    <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">17/12 12:16</span><span class="tl-text">Contratto #294: anagrafica, dispositivo, privacy, test adeguatezza completati</span></div>
+    <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">17/12 12:17</span><span class="tl-text">Pagamento carta approvato da Zuora (3D Secure superato)</span></div>
+    <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">17/12 12:17</span><span class="tl-text">Contratto Estendo #12320643 creato con successo, PDF generato</span></div>
+    <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">17/12 12:18</span><span class="tl-text">Abbonamento Zuora A-S00000133 attivato (&euro;15,99/mese)</span></div>
+    <div class="tl-item"><div class="tl-dot red"></div><span class="tl-time">~20/12</span><span class="tl-text">Cron giornaliero cancella il contratto #294 (era rimasto in stato &ldquo;bozza&rdquo;)</span></div>
+    <div class="tl-item"><div class="tl-dot red"></div><span class="tl-time">09/03</span><span class="tl-text">Ilaria segnala: vendita non presente in piattaforma n&eacute; su Namirial</span></div>
+    <div class="tl-item">
+        <div class="tl-dot blue"></div>
+        <span class="tl-time">09/03</span>
+        <span class="tl-text">Diagnosi Radar: tutti i dati recuperati dai 46 metadati orfani</span>
+    </div>
+    <div class="tl-duration">~83 giorni tra la vendita e la segnalazione</div>
+</div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+<div class="tab-buttons">
+    <button class="tab-btn active" onclick="switchTab('client')">
+        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Cosa &egrave; successo
+    </button>
+    <button class="tab-btn" onclick="switchTab('tech')">
+        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Dettagli tecnici
+    </button>
+    <button class="tab-btn" onclick="switchTab('data')">
+        <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        Dati recuperati
+    </button>
+</div>
+
+<!-- TAB: CLIENT -->
+<div id="tab-client" class="tab-panel active">
+
+<div class="alert-box">
+    <h3>&#x26A0; Cosa &egrave; andato storto</h3>
+    <p>La vendita del 17 dicembre per Benedetta Sibona &egrave; andata a buon fine: il pagamento &egrave; stato approvato, il contratto Estendo &egrave; stato creato, e l'abbonamento mensile &egrave; partito correttamente. Tuttavia, il sistema aveva un errore interno che ha impedito al contratto di passare dallo stato &ldquo;bozza&rdquo; a &ldquo;completato&rdquo;.</p>
+    <p style="margin-top:.5rem;">Una procedura automatica di pulizia, che cancella le bozze vecchie ogni notte, ha eliminato il contratto dopo circa 3 giorni. Di conseguenza:</p>
+    <ul>
+        <li>Il contratto non appare nella lista delle vendite sulla piattaforma</li>
+        <li>I documenti non sono stati inviati a Namirial per l'archiviazione</li>
+        <li>Il certificato PDF di Estendo (file temporaneo) non &egrave; pi&ugrave; scaricabile</li>
+    </ul>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="step-title">Pagamento e abbonamento funzionano</span>
+    </div>
+    <div class="step-explain">La cliente paga regolarmente &euro;15,99 al mese tramite Zuora. L'abbonamento (numero A-S00000133) &egrave; attivo dal 17 dicembre 2025 e non ha mai avuto problemi. Nessun intervento necessario da questo punto di vista.</div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="step-title">Contratto Estendo creato</span>
+    </div>
+    <div class="step-explain">Il contratto Estendo numero 12320643 (polizza ESMIT0000000294) risulta creato correttamente nel sistema Estendo. Il problema &egrave; solo che la piattaforma Nexum non lo mostra pi&ugrave; perch&eacute; il record locale &egrave; stato cancellato.</div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon fail"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+        <span class="step-title">Certificato PDF non pi&ugrave; disponibile</span>
+    </div>
+    <div class="step-explain">Il file PDF del certificato era salvato in una cartella temporanea del server Estendo che viene ripulita periodicamente. Il file non &egrave; pi&ugrave; scaricabile. Per ottenere una copia, &egrave; necessario richiedere a Estendo la rigenerazione del certificato tramite il numero contratto 12320643.</div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon fail"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+        <span class="step-title">Dati non arrivati a Namirial</span>
+    </div>
+    <div class="step-explain">Poich&eacute; il contratto &egrave; stato cancellato prima che il processo di archiviazione potesse prenderlo in carico, i documenti non sono mai stati inviati a Namirial. L'archiviazione a norma non &egrave; stata effettuata per questa vendita.</div>
+</div>
+
+<div class="action-box">
+    <h3>&#x1F527; Azioni da fare</h3>
+    <ol>
+        <li><strong>Richiedere a Estendo</strong> la rigenerazione del certificato PDF per il contratto 12320643</li>
+        <li><strong>Ricreare il record contratto</strong> nel database DIMO (tutti i dati sono disponibili nei metadati)</li>
+        <li><strong>Inviare i documenti a Namirial</strong> per l'archiviazione una volta ripristinato il contratto</li>
+        <li><strong>Correggere il bug</strong>: il passaggio da &ldquo;bozza&rdquo; a &ldquo;completato&rdquo; non avviene in tutti i casi, lasciando vendite valide vulnerabili alla pulizia automatica</li>
+    </ol>
+</div>
+
+</div>
+
+<!-- TAB: TECH -->
+<div id="tab-tech" class="tab-panel">
+
+<div class="tech-section">
+<h3>
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    Riepilogo
+</h3>
+<table class="tech-table">
+    <tr><td>Server</td><td><code>SRVAPPWEB (62.173.167.212)</code></td></tr>
+    <tr><td>Path</td><td><code>/var/www/html/nexum-dimo25/current</code></td></tr>
+    <tr><td>Piattaforma</td><td>DIMO &mdash; nexumapp.dimo.estendo.it</td></tr>
+    <tr><td>Scenario</td><td>Diagnosi database</td></tr>
+    <tr><td>Verdict</td><td style="color:var(--red);font-weight:600;">BUG &mdash; Dati orfani, contratto cancellato dal cron</td></tr>
+</table>
+</div>
+
+<div class="tech-section">
+<h3>
+    <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Root cause
+</h3>
+<div class="log-block">app/Console/Commands/ContractOldDelete.php
+
+Il cron <strong>app:contract-old-delete</strong> gira ogni giorno e cancella
+tutti i contratti con status='draft' creati da pi&ugrave; di 72 ore.
+
+Il contratto #294 ha completato tutti gli step:
+- Anagrafica (step 21) ✓
+- Dispositivo (step 22) ✓
+- Privacy (step 23) ✓
+- Test adeguatezza (step 24) ✓
+- Pagamento carta (step 25) ✓  → Zuora Approved
+- Contratto Estendo creato ✓
+- Subscription Zuora attivata ✓
+
+MA lo status nella tabella contracts non è mai passato da 'draft'
+a 'complete'. Il contratto è rimasto 'draft' nonostante fosse
+completamente finalizzato.
+
+Dopo ~72h il cron l'ha cancellato. Il model Contract usa SoftDeletes
+($contract->delete() setta deleted_at), ma il record è COMPLETAMENTE
+ASSENTE dal DB — nemmeno come soft-deleted.
+
+Gap IDs nella tabella contracts:
+  291 (16/12 14:28) → 298 (17/12 13:57)
+  Mancano: 292, 293, 294, 295, 296, 297
+
+Di questi, 293 e 294 hanno metas orfani (entrambi Benedetta Sibona).
+Gli altri (292, 295-297) non hanno metas → probabilmente draft vuoti.
+
+Ipotesi: i contratti sono stati soft-deleted dal cron, poi un
+successivo processo ha fatto un hard-delete (purge) dei record
+con deleted_at. La data del bulk soft-delete (15/01/2026) sul
+batch di "withdraw" suggerisce un'operazione manuale di pulizia.</div>
+</div>
+
+<div class="tech-section">
+<h3>
+    <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+    Dati verificati
+</h3>
+<div class="log-block">Tabella clients:
+  ID 99:  created_at=2025-12-17 12:05:09, name=bendetta, surname=sibona
+  ID 100: created_at=2025-12-17 12:15:44, name=bendetta, surname=sibona
+  (duplicato — secondo tentativo, ZIP diverso: 12041 vs 12048)
+
+Tabella contractmetas (contract_id=294, 46 record):
+  Step 21 (Anagrafica): email, phone, name, surname, fiscal, address...
+  Step 22 (Dispositivo): Apple, brand=32, model=78952, IMEI=352292537314947, €1339
+  Step 23 (Privacy): tutti i consensi accettati
+  Step 24 (Adeguatezza): tutte le domande risposte
+  Step 25 (Pagamento):
+    - payment.type = credit-card
+    - Zuora 3DS: AuthenticationPass, AuthorizeResult=Approved
+    - zuora.payment.methodId = 8a2895a89b2645d7019b2c3ebaa76c21
+    - estendo.contract.id = 12320643
+    - estendo.file.path = http://vendite.estendo.it/temp/PDF/CERT_0000123206... (404)
+    - zuora.subscription = A-S00000133 (Active, €15.99/month, contractEffective 2025-12-17)
+    - zuora.subscription.response: orderNumber O-00000196, invoiceNumber INV00000150
+
+PDF Estendo:
+  URL: http://vendite.estendo.it/temp/PDF/CERT_000012320643YWZWHZZGYZTZZWMM.pdf
+  Status: HTTP 404 — file temporaneo rimosso dal server Estendo
+  Nessuna copia locale in storage/app/public/ o media library</div>
+</div>
+
+<div class="tech-section">
+<h3>
+    <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+    Fix proposto
+</h3>
+<div class="log-block">1. IMMEDIATO: Ricreare il record in contracts con i dati dai metas:
+   INSERT INTO contracts (id, created_at, updated_at, product_id,
+   client_id, user_id, status, last_step, payment_data, payment_at,
+   store_id) VALUES (294, '2025-12-17 12:14:33', NOW(), [product_id],
+   100, [user_id], 'complete', '8', [payment_data], '2025-12-17 12:17:47',
+   [store_id]);
+   → Serve conoscere product_id, user_id e store_id dal contesto
+
+2. IMMEDIATO: Richiedere a Estendo la rigenerazione del certificato PDF
+   per il contratto 12320643
+
+3. IMMEDIATO: Una volta ripristinato, triggerare l'archiviazione Namirial
+   manualmente: php artisan nexum:archive-lta --contract=294
+
+4. BUG FIX: Investigare perché lo status non passa da 'draft' a 'complete'
+   dopo la finalizzazione. Probabile: il controller/Livewire che gestisce
+   l'ultimo step non aggiorna lo status in tutti i code path.
+
+5. SAFETY NET: Il cron ContractOldDelete dovrebbe verificare che un
+   contratto draft non abbia un pagamento approvato prima di cancellarlo.
+   Aggiungere: ->whereNull('payment_at') alla query.</div>
+</div>
+
+</div>
+
+<!-- TAB: DATA -->
+<div id="tab-data" class="tab-panel">
+
+<div class="data-card">
+<h3>&#x1F464; Cliente</h3>
+<div class="data-grid">
+    <div class="data-item"><span class="data-label">Nome</span><span class="data-value">Benedetta Sibona</span></div>
+    <div class="data-item"><span class="data-label">Codice Fiscale</span><span class="data-value">SBNBDT07B66B791M</span></div>
+    <div class="data-item"><span class="data-label">Email</span><span class="data-value">benedetta.sibona@gmail.com</span></div>
+    <div class="data-item"><span class="data-label">Telefono</span><span class="data-value">3277507348</span></div>
+    <div class="data-item"><span class="data-label">Indirizzo</span><span class="data-value">Via Moretta 4</span></div>
+    <div class="data-item"><span class="data-label">Citt&agrave;</span><span class="data-value">Sommariva Bosco (CN) 12048</span></div>
+    <div class="data-item"><span class="data-label">Data nascita</span><span class="data-value">26/02/2007</span></div>
+    <div class="data-item"><span class="data-label">ID cliente DB</span><span class="data-value">99 e 100 (duplicato)</span></div>
+</div>
+</div>
+
+<div class="data-card">
+<h3>&#x1F4F1; Dispositivo assicurato</h3>
+<div class="data-grid">
+    <div class="data-item"><span class="data-label">Marca</span><span class="data-value">Apple (cod. 32)</span></div>
+    <div class="data-item"><span class="data-label">Modello</span><span class="data-value">cod. 78952</span></div>
+    <div class="data-item"><span class="data-label">IMEI</span><span class="data-value">352292537314947</span></div>
+    <div class="data-item"><span class="data-label">Prezzo</span><span class="data-value">&euro;1.339,00</span></div>
+</div>
+</div>
+
+<div class="data-card">
+<h3>&#x1F4B3; Pagamento</h3>
+<div class="data-grid">
+    <div class="data-item"><span class="data-label">Tipo</span><span class="data-value">Carta di credito</span></div>
+    <div class="data-item"><span class="data-label">Esito</span><span class="data-value ok">Approvato (3D Secure superato)</span></div>
+    <div class="data-item"><span class="data-label">Importo mensile</span><span class="data-value">&euro;15,99</span></div>
+    <div class="data-item"><span class="data-label">Data pagamento</span><span class="data-value">17/12/2025 12:17</span></div>
+    <div class="data-item"><span class="data-label">Zuora Order</span><span class="data-value">O-00000196</span></div>
+    <div class="data-item"><span class="data-label">Zuora Invoice</span><span class="data-value">INV00000150</span></div>
+    <div class="data-item"><span class="data-label">Zuora Payment</span><span class="data-value">P-00000154</span></div>
+    <div class="data-item"><span class="data-label">Zuora Payment Method</span><span class="data-value" style="font-size:.7rem;">8a2895a89b2645d7019b2c3ebaa76c21</span></div>
+</div>
+</div>
+
+<div class="data-card">
+<h3>&#x1F4DC; Contratto</h3>
+<div class="data-grid">
+    <div class="data-item"><span class="data-label">Contratto Estendo</span><span class="data-value">12320643</span></div>
+    <div class="data-item"><span class="data-label">Polizza</span><span class="data-value">ESMIT0000000294</span></div>
+    <div class="data-item"><span class="data-label">Zuora Subscription</span><span class="data-value">A-S00000133</span></div>
+    <div class="data-item"><span class="data-label">Zuora Account</span><span class="data-value">A00000101</span></div>
+    <div class="data-item"><span class="data-label">Stato Zuora</span><span class="data-value ok">Active</span></div>
+    <div class="data-item"><span class="data-label">Decorrenza</span><span class="data-value">17/12/2025 &rarr; 17/12/2026</span></div>
+    <div class="data-item"><span class="data-label">PDF Estendo</span><span class="data-value highlight">Non disponibile (file temporaneo rimosso)</span></div>
+    <div class="data-item"><span class="data-label">Archiviazione Namirial</span><span class="data-value highlight">Mai eseguita</span></div>
+</div>
+</div>
+
+<div class="data-card">
+<h3>&#x2699; Consensi privacy</h3>
+<div class="data-grid">
+    <div class="data-item"><span class="data-label">Protezione dati</span><span class="data-value ok">Accettato</span></div>
+    <div class="data-item"><span class="data-label">Comunicazioni</span><span class="data-value ok">Accettato</span></div>
+    <div class="data-item"><span class="data-label">Privacy</span><span class="data-value ok">Accettato</span></div>
+    <div class="data-item"><span class="data-label">Sondaggi</span><span class="data-value ok">Accettato</span></div>
+    <div class="data-item"><span class="data-label">Informativa</span><span class="data-value ok">Accettato</span></div>
+    <div class="data-item"><span class="data-label">Email pre-contrattuale</span><span class="data-value">Inviata 17/12 12:16</span></div>
+</div>
+</div>
+
+<div class="data-card">
+<h3>&#x2705; Test di adeguatezza</h3>
+<div class="data-grid">
+    <div class="data-item"><span class="data-label">Domanda 1</span><span class="data-value ok">Superata</span></div>
+    <div class="data-item"><span class="data-label">Domanda 2</span><span class="data-value ok">Superata</span></div>
+    <div class="data-item"><span class="data-label">Domanda 3</span><span class="data-value ok">Superata</span></div>
+    <div class="data-item"><span class="data-label">Domanda 4</span><span class="data-value ok">Superata</span></div>
+    <div class="data-item"><span class="data-label">Domanda 5</span><span class="data-value ok">Superata</span></div>
+    <div class="data-item"><span class="data-label">Domanda 6</span><span class="data-value ok">Superata</span></div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="watermark"><a href="https://radar.netycom.it">Radar</a> &middot; netycom &middot; 9 mar 2026</div>
+
+<script>
+function switchTab(id) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.closest('.tab-btn').classList.add('active');
+}
+</script>
+
+</body>
+</html>

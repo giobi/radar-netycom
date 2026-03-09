@@ -207,10 +207,6 @@ body { font-family: var(--mono); background: var(--bg); color: var(--text); line
         <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
         Dettagli tecnici
     </button>
-    <button class="tab-btn" onclick="switchTab('data')">
-        <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-        Dati recuperati
-    </button>
 </div>
 
 <!-- TAB: CLIENT -->
@@ -361,206 +357,64 @@ PDF Estendo:
 <div class="tech-section">
 <h3>
     <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-    Fix proposto
+    Ripristino e correzioni
 </h3>
 <div class="log-block">═══════════════════════════════════════════════════════════════
-  RIPRISTINO CONTRATTO — Pronto all'uso, testato
+  RIPRISTINO CONTRATTO
 ═══════════════════════════════════════════════════════════════
 
-STEP 1: Ricreare il record contratto
-─────────────────────────────────────
-cd /var/www/html/nexum-dimo25/current
-php artisan tinker
+Tutti i dati della vendita (anagrafica, dispositivo, pagamento,
+consensi, test di adeguatezza — 46 record) sono stati recuperati
+dal database. Il contratto pu&ograve; essere ricreato con tutti i
+dati originali.
 
-  DB::table('contracts')->insert([
-      'id'           => 294,
-      'created_at'   => '2025-12-17 12:14:33',
-      'updated_at'   => now(),
-      'product_id'   => 3,        // Fascia 1200-1500€ (device €1339)
-      'client_id'    => 100,      // Benedetta Sibona (secondo inserimento)
-      'user_id'      => 103,      // ALEX — unico operatore attivo il 17/12
-      'store_id'     => 6,        // IVREA — store di ALEX
-      'status'       => 'complete',
-      'last_step'    => '8',
-      'payment_at'   => '2025-12-17 12:17:47',
-      'payment_data' => json_encode([
-          'type' => 'zuora',
-          'data' => json_encode([
-              'success' => true,
-              'orderNumber' => 'O-00000196',
-              'accountNumber' => 'A00000101',
-              'status' => 'Completed',
-              'subscriptionNumbers' => ['A-S00000133'],
-              'invoiceNumbers' => ['INV00000150'],
-              'paymentNumber' => 'P-00000154',
-              'paidAmount' => 15.99
-          ])
-      ]),
-  ]);
-
-Deduzione campi mancanti:
-  - product_id=3: prezzo device €1339 → fascia [1200,01-1500,00€]
-                   confermato da Zuora: €15.99/mese = piano product 3
-  - user_id=103:   ALEX (alex.fessia@aisperdimo.it), unico operatore
-                   attivo il 17/12, stesso user del contratto #298
-  - store_id=6:    IVREA, store assegnato a ALEX (current_store_id=6)
-
-I 46 contractmetas esistenti puntano già a contract_id=294.
-Dopo l'INSERT si riagganciano automaticamente.
-
-
-STEP 2: Verificare
-───────────────────
-php artisan tinker
-  $c = App\Models\Contract::find(294);
-  echo $c->status;               // → 'complete'
-  echo $c->client->surname;      // → 'sibona'
-  echo $c->meta()->count();      // → 46
-  echo $c->getEstendoContractId(); // → '12320643'
-
-
-STEP 3: Richiedere PDF a Estendo
-─────────────────────────────────
-Il PDF temporaneo è stato rimosso (vendite.estendo.it/temp/ → 404).
-Richiedere a Estendo la rigenerazione del certificato:
-  Contratto: 12320643
-  Polizza: ESMIT0000000294
-
-
-STEP 4: Archiviazione Namirial
-──────────────────────────────
-Una volta che il contratto è nel DB e il PDF è disponibile:
-  php artisan nexum:archive-lta --contract=294
-
-
-STEP 5 (OPZIONALE): Pulizia duplicato client
-─────────────────────────────────────────────
-Client 99 e 100 sono duplicati. Il contratto usa il 100.
-Il client 99 non ha contratti collegati → soft-delete possibile:
-  App\Models\Client::find(99)->delete();
+Dopo il ripristino:
+  1. Il contratto ricompare nella lista vendite sulla piattaforma
+  2. Si pu&ograve; procedere con l'archiviazione Namirial
+  3. Serve richiedere a Estendo la rigenerazione del certificato
+     PDF (contratto 12320643, polizza ESMIT0000000294)
 
 
 ═══════════════════════════════════════════════════════════════
-  BUG FIX — Per evitare che ricapiti
+  CAUSA DEL PROBLEMA
 ═══════════════════════════════════════════════════════════════
 
-BUG: Lo status del contratto non passa da 'draft' a 'complete'
-     dopo la finalizzazione. Il contratto resta 'draft' anche
-     dopo pagamento approvato + contratto Estendo creato.
-     → Investigare il Livewire component dell'ultimo step (step 8)
-       e il code path di finalizzazione.
+Due problemi distinti nel sistema:
 
-SAFETY NET: Il cron ContractOldDelete cancella TUTTI i draft > 72h
-            senza verificare se hanno un pagamento approvato.
+1. LO STEP FINALE DELLA VENDITA potrebbe non finalizzare
+   correttamente il contratto. In questo caso il contratto
+   &egrave; rimasto in stato "bozza" anche dopo che il pagamento
+   era stato approvato e il contratto Estendo era stato creato.
 
-File: app/Console/Commands/ContractOldDelete.php
-Riga 22, aggiungere:
+2. LA PULIZIA AUTOMATICA (gira ogni notte) cancella tutte le
+   bozze pi&ugrave; vecchie di 72 ore, senza verificare se la bozza
+   ha gi&agrave; ricevuto un pagamento. Questo significa che una
+   vendita completata ma non finalizzata correttamente viene
+   cancellata come se fosse una bozza abbandonata.
 
-  $contracts = Contract::where('created_at', '&lt;', now()-&gt;subHours(72))
-      ->where('status', 'draft')
-      ->whereNull('payment_at')    // ← AGGIUNGERE QUESTA RIGA
-      ->get();
+Combinazione dei due: la vendita va a buon fine per il cliente
+(paga, riceve il contratto Estendo, l'abbonamento parte), ma
+il sistema la perde dopo 3 giorni.
 
-Questo impedisce al cron di cancellare contratti draft che hanno
-già ricevuto un pagamento (= vendite fantasma come questa).
 
 ═══════════════════════════════════════════════════════════════
-  RESPONSABILITÀ
+  RESPONSABILIT&Agrave;
 ═══════════════════════════════════════════════════════════════
 
-Il bug è nel codice applicativo (code path finalizzazione):
-  1. Lo step finale non aggiorna lo status da 'draft' a 'complete'
-     in tutti i casi → BUG nel flusso Livewire
-  2. Il cron di pulizia non ha safety check sui pagamenti → DESIGN
-     FLAW nel comando ContractOldDelete
+Non &egrave; un errore operativo — nessun intervento manuale ha causato
+la perdita. &Egrave; un difetto del software che si attiva quando lo
+step finale della vendita non completa correttamente il passaggio
+di stato del contratto.
 
-Non è un errore operativo (nessun intervento manuale ha causato
-la perdita). È un bug software che si attiva solo quando il
-flusso di finalizzazione fallisce silenziosamente.</div>
-</div>
+La pulizia automatica avrebbe dovuto avere un controllo di
+sicurezza: non cancellare mai una bozza che ha gi&agrave; ricevuto
+un pagamento.
 
-</div>
-
-<!-- TAB: DATA -->
-<div id="tab-data" class="tab-panel">
-
-<div class="data-card">
-<h3>&#x1F464; Cliente</h3>
-<div class="data-grid">
-    <div class="data-item"><span class="data-label">Nome</span><span class="data-value">Benedetta Sibona</span></div>
-    <div class="data-item"><span class="data-label">Codice Fiscale</span><span class="data-value">SBNBDT07B66B791M</span></div>
-    <div class="data-item"><span class="data-label">Email</span><span class="data-value">benedetta.sibona@gmail.com</span></div>
-    <div class="data-item"><span class="data-label">Telefono</span><span class="data-value">3277507348</span></div>
-    <div class="data-item"><span class="data-label">Indirizzo</span><span class="data-value">Via Moretta 4</span></div>
-    <div class="data-item"><span class="data-label">Citt&agrave;</span><span class="data-value">Sommariva Bosco (CN) 12048</span></div>
-    <div class="data-item"><span class="data-label">Data nascita</span><span class="data-value">26/02/2007</span></div>
-    <div class="data-item"><span class="data-label">ID cliente DB</span><span class="data-value">99 e 100 (duplicato)</span></div>
-</div>
-</div>
-
-<div class="data-card">
-<h3>&#x1F4F1; Dispositivo assicurato</h3>
-<div class="data-grid">
-    <div class="data-item"><span class="data-label">Marca</span><span class="data-value">Apple (cod. 32)</span></div>
-    <div class="data-item"><span class="data-label">Modello</span><span class="data-value">cod. 78952</span></div>
-    <div class="data-item"><span class="data-label">IMEI</span><span class="data-value">352292537314947</span></div>
-    <div class="data-item"><span class="data-label">Prezzo</span><span class="data-value">&euro;1.339,00</span></div>
-</div>
-</div>
-
-<div class="data-card">
-<h3>&#x1F4B3; Pagamento</h3>
-<div class="data-grid">
-    <div class="data-item"><span class="data-label">Tipo</span><span class="data-value">Carta di credito</span></div>
-    <div class="data-item"><span class="data-label">Esito</span><span class="data-value ok">Approvato (3D Secure superato)</span></div>
-    <div class="data-item"><span class="data-label">Importo mensile</span><span class="data-value">&euro;15,99</span></div>
-    <div class="data-item"><span class="data-label">Data pagamento</span><span class="data-value">17/12/2025 12:17</span></div>
-    <div class="data-item"><span class="data-label">Zuora Order</span><span class="data-value">O-00000196</span></div>
-    <div class="data-item"><span class="data-label">Zuora Invoice</span><span class="data-value">INV00000150</span></div>
-    <div class="data-item"><span class="data-label">Zuora Payment</span><span class="data-value">P-00000154</span></div>
-    <div class="data-item"><span class="data-label">Zuora Payment Method</span><span class="data-value" style="font-size:.7rem;">8a2895a89b2645d7019b2c3ebaa76c21</span></div>
-</div>
-</div>
-
-<div class="data-card">
-<h3>&#x1F4DC; Contratto</h3>
-<div class="data-grid">
-    <div class="data-item"><span class="data-label">Contratto Estendo</span><span class="data-value">12320643</span></div>
-    <div class="data-item"><span class="data-label">Polizza</span><span class="data-value">ESMIT0000000294</span></div>
-    <div class="data-item"><span class="data-label">Zuora Subscription</span><span class="data-value">A-S00000133</span></div>
-    <div class="data-item"><span class="data-label">Zuora Account</span><span class="data-value">A00000101</span></div>
-    <div class="data-item"><span class="data-label">Stato Zuora</span><span class="data-value ok">Active</span></div>
-    <div class="data-item"><span class="data-label">Decorrenza</span><span class="data-value">17/12/2025 &rarr; 17/12/2026</span></div>
-    <div class="data-item"><span class="data-label">PDF Estendo</span><span class="data-value highlight">Non disponibile (file temporaneo rimosso)</span></div>
-    <div class="data-item"><span class="data-label">Archiviazione Namirial</span><span class="data-value highlight">Mai eseguita</span></div>
-</div>
-</div>
-
-<div class="data-card">
-<h3>&#x2699; Consensi privacy</h3>
-<div class="data-grid">
-    <div class="data-item"><span class="data-label">Protezione dati</span><span class="data-value ok">Accettato</span></div>
-    <div class="data-item"><span class="data-label">Comunicazioni</span><span class="data-value ok">Accettato</span></div>
-    <div class="data-item"><span class="data-label">Privacy</span><span class="data-value ok">Accettato</span></div>
-    <div class="data-item"><span class="data-label">Sondaggi</span><span class="data-value ok">Accettato</span></div>
-    <div class="data-item"><span class="data-label">Informativa</span><span class="data-value ok">Accettato</span></div>
-    <div class="data-item"><span class="data-label">Email pre-contrattuale</span><span class="data-value">Inviata 17/12 12:16</span></div>
-</div>
-</div>
-
-<div class="data-card">
-<h3>&#x2705; Test di adeguatezza</h3>
-<div class="data-grid">
-    <div class="data-item"><span class="data-label">Domanda 1</span><span class="data-value ok">Superata</span></div>
-    <div class="data-item"><span class="data-label">Domanda 2</span><span class="data-value ok">Superata</span></div>
-    <div class="data-item"><span class="data-label">Domanda 3</span><span class="data-value ok">Superata</span></div>
-    <div class="data-item"><span class="data-label">Domanda 4</span><span class="data-value ok">Superata</span></div>
-    <div class="data-item"><span class="data-label">Domanda 5</span><span class="data-value ok">Superata</span></div>
-    <div class="data-item"><span class="data-label">Domanda 6</span><span class="data-value ok">Superata</span></div>
-</div>
+Entrambi i problemi vanno corretti per evitare che ricapiti.</div>
 </div>
 
 </div>
+
 
 </div>
 

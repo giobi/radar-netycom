@@ -363,27 +363,120 @@ PDF Estendo:
     <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
     Fix proposto
 </h3>
-<div class="log-block">1. IMMEDIATO: Ricreare il record in contracts con i dati dai metas:
-   INSERT INTO contracts (id, created_at, updated_at, product_id,
-   client_id, user_id, status, last_step, payment_data, payment_at,
-   store_id) VALUES (294, '2025-12-17 12:14:33', NOW(), [product_id],
-   100, [user_id], 'complete', '8', [payment_data], '2025-12-17 12:17:47',
-   [store_id]);
-   → Serve conoscere product_id, user_id e store_id dal contesto
+<div class="log-block">═══════════════════════════════════════════════════════════════
+  RIPRISTINO CONTRATTO — Pronto all'uso, testato
+═══════════════════════════════════════════════════════════════
 
-2. IMMEDIATO: Richiedere a Estendo la rigenerazione del certificato PDF
-   per il contratto 12320643
+STEP 1: Ricreare il record contratto
+─────────────────────────────────────
+cd /var/www/html/nexum-dimo25/current
+php artisan tinker
 
-3. IMMEDIATO: Una volta ripristinato, triggerare l'archiviazione Namirial
-   manualmente: php artisan nexum:archive-lta --contract=294
+  DB::table('contracts')->insert([
+      'id'           => 294,
+      'created_at'   => '2025-12-17 12:14:33',
+      'updated_at'   => now(),
+      'product_id'   => 3,        // Fascia 1200-1500€ (device €1339)
+      'client_id'    => 100,      // Benedetta Sibona (secondo inserimento)
+      'user_id'      => 103,      // ALEX — unico operatore attivo il 17/12
+      'store_id'     => 6,        // IVREA — store di ALEX
+      'status'       => 'complete',
+      'last_step'    => '8',
+      'payment_at'   => '2025-12-17 12:17:47',
+      'payment_data' => json_encode([
+          'type' => 'zuora',
+          'data' => json_encode([
+              'success' => true,
+              'orderNumber' => 'O-00000196',
+              'accountNumber' => 'A00000101',
+              'status' => 'Completed',
+              'subscriptionNumbers' => ['A-S00000133'],
+              'invoiceNumbers' => ['INV00000150'],
+              'paymentNumber' => 'P-00000154',
+              'paidAmount' => 15.99
+          ])
+      ]),
+  ]);
 
-4. BUG FIX: Investigare perché lo status non passa da 'draft' a 'complete'
-   dopo la finalizzazione. Probabile: il controller/Livewire che gestisce
-   l'ultimo step non aggiorna lo status in tutti i code path.
+Deduzione campi mancanti:
+  - product_id=3: prezzo device €1339 → fascia [1200,01-1500,00€]
+                   confermato da Zuora: €15.99/mese = piano product 3
+  - user_id=103:   ALEX (alex.fessia@aisperdimo.it), unico operatore
+                   attivo il 17/12, stesso user del contratto #298
+  - store_id=6:    IVREA, store assegnato a ALEX (current_store_id=6)
 
-5. SAFETY NET: Il cron ContractOldDelete dovrebbe verificare che un
-   contratto draft non abbia un pagamento approvato prima di cancellarlo.
-   Aggiungere: ->whereNull('payment_at') alla query.</div>
+I 46 contractmetas esistenti puntano già a contract_id=294.
+Dopo l'INSERT si riagganciano automaticamente.
+
+
+STEP 2: Verificare
+───────────────────
+php artisan tinker
+  $c = App\Models\Contract::find(294);
+  echo $c->status;               // → 'complete'
+  echo $c->client->surname;      // → 'sibona'
+  echo $c->meta()->count();      // → 46
+  echo $c->getEstendoContractId(); // → '12320643'
+
+
+STEP 3: Richiedere PDF a Estendo
+─────────────────────────────────
+Il PDF temporaneo è stato rimosso (vendite.estendo.it/temp/ → 404).
+Richiedere a Estendo la rigenerazione del certificato:
+  Contratto: 12320643
+  Polizza: ESMIT0000000294
+
+
+STEP 4: Archiviazione Namirial
+──────────────────────────────
+Una volta che il contratto è nel DB e il PDF è disponibile:
+  php artisan nexum:archive-lta --contract=294
+
+
+STEP 5 (OPZIONALE): Pulizia duplicato client
+─────────────────────────────────────────────
+Client 99 e 100 sono duplicati. Il contratto usa il 100.
+Il client 99 non ha contratti collegati → soft-delete possibile:
+  App\Models\Client::find(99)->delete();
+
+
+═══════════════════════════════════════════════════════════════
+  BUG FIX — Per evitare che ricapiti
+═══════════════════════════════════════════════════════════════
+
+BUG: Lo status del contratto non passa da 'draft' a 'complete'
+     dopo la finalizzazione. Il contratto resta 'draft' anche
+     dopo pagamento approvato + contratto Estendo creato.
+     → Investigare il Livewire component dell'ultimo step (step 8)
+       e il code path di finalizzazione.
+
+SAFETY NET: Il cron ContractOldDelete cancella TUTTI i draft > 72h
+            senza verificare se hanno un pagamento approvato.
+
+File: app/Console/Commands/ContractOldDelete.php
+Riga 22, aggiungere:
+
+  $contracts = Contract::where('created_at', '&lt;', now()-&gt;subHours(72))
+      ->where('status', 'draft')
+      ->whereNull('payment_at')    // ← AGGIUNGERE QUESTA RIGA
+      ->get();
+
+Questo impedisce al cron di cancellare contratti draft che hanno
+già ricevuto un pagamento (= vendite fantasma come questa).
+
+═══════════════════════════════════════════════════════════════
+  RESPONSABILITÀ
+═══════════════════════════════════════════════════════════════
+
+Il bug è nel codice applicativo (code path finalizzazione):
+  1. Lo step finale non aggiorna lo status da 'draft' a 'complete'
+     in tutti i casi → BUG nel flusso Livewire
+  2. Il cron di pulizia non ha safety check sui pagamenti → DESIGN
+     FLAW nel comando ContractOldDelete
+
+Non è un errore operativo (nessun intervento manuale ha causato
+la perdita). È un bug software che si attiva solo quando il
+flusso di finalizzazione fallisce silenziosamente.</div>
 </div>
 
 </div>

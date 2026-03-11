@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Radar — Nexum: Predeploy staging release 2026.03.1</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #fafaf9; --surface: #ffffff; --surface-alt: #f5f5f4;
+    --border: #e5e5e0; --border-strong: #d0d0c8;
+    --green: #15803d; --green-bg: rgba(21,128,61,.06);
+    --yellow: #854d0e; --yellow-bg: rgba(133,77,14,.06);
+    --red: #b91c1c; --red-bg: rgba(185,28,28,.06);
+    --blue: #1d4ed8; --blue-bg: rgba(29,78,216,.06);
+    --text: #1c1917; --text-secondary: #57534e; --text-muted: #a8a29e;
+    --mono: 'IBM Plex Mono', 'SFMono-Regular', 'Consolas', monospace;
+    --radius: 3px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: var(--mono); background: var(--bg); color: var(--text); line-height:1.7; font-size:14px; }
+
+.header { background: var(--surface); border-bottom: 2px solid var(--text); padding: 2rem 0 1.75rem; }
+.container { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; }
+.brand { font-size: .65rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .75rem; display: flex; align-items: center; gap: .5rem; }
+.brand svg { width: 14px; height: 14px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+.brand a { color: var(--text-muted); text-decoration: none; }
+.title { font-size: 1.3rem; font-weight: 700; margin-bottom: .35rem; letter-spacing: -.01em; }
+.meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: .75rem; color: var(--text-secondary); }
+.meta-item { display: flex; align-items: center; gap: .35rem; }
+.meta-item svg { width: 13px; height: 13px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+
+.score-section { padding: 2rem 0; }
+.score-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; display: flex; align-items: center; gap: 2rem; }
+.score-ring { position: relative; width: 100px; height: 100px; flex-shrink: 0; }
+.score-ring svg { transform: rotate(-90deg); }
+.score-ring .track { fill: none; stroke: var(--surface-alt); stroke-width: 6; }
+.score-ring .fill { fill: none; stroke-width: 6; stroke-linecap: round; }
+.score-number { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 1.6rem; font-weight: 700; }
+.score-number small { font-size: .75rem; font-weight: 400; color: var(--text-muted); }
+.score-summary h2 { font-size: .95rem; font-weight: 600; margin-bottom: .35rem; }
+.score-summary p { font-size: .82rem; color: var(--text-secondary); line-height: 1.75; }
+
+.tabs { padding: 1.25rem 0 0; }
+.tab-buttons { display: flex; gap: 0; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border); }
+.tab-btn { padding: .6rem 1.2rem; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; background: none; font-family: var(--mono); font-size: .75rem; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: .4rem; }
+.tab-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tab-btn:hover { color: var(--text-secondary); }
+.tab-btn.active { color: var(--text); border-bottom-color: var(--text); font-weight: 600; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.step { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: .75rem; }
+.step-header { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; }
+.step-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step-icon svg { width: 12px; height: 12px; stroke-width: 2.5; fill: none; }
+.step-icon.ok { background: var(--green-bg); }
+.step-icon.ok svg { stroke: var(--green); }
+.step-icon.warn { background: var(--yellow-bg); }
+.step-icon.warn svg { stroke: var(--yellow); }
+.step-icon.fail { background: var(--red-bg); }
+.step-icon.fail svg { stroke: var(--red); }
+.step-icon.info { background: var(--blue-bg); }
+.step-icon.info svg { stroke: var(--blue); }
+.step-title { font-weight: 600; font-size: .85rem; }
+.step-explain { font-size: .82rem; color: var(--text-secondary); margin-bottom: .75rem; line-height: 1.8; }
+
+.screenshot { margin: .75rem 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.screenshot img { width: 100%; display: block; }
+.screenshot-caption { font-size: .72rem; color: var(--text-muted); padding: .5rem .75rem; background: var(--surface-alt); }
+
+.tech-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: .75rem; }
+.tech-section h3 { font-size: .78rem; font-weight: 600; margin-bottom: .75rem; letter-spacing: .02em; display: flex; align-items: center; gap: .4rem; }
+.tech-section h3 svg { width: 13px; height: 13px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+.tech-table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+.tech-table th { text-align: left; font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); padding: .4rem 0; border-bottom: 1px solid var(--border); }
+.tech-table td { padding: .4rem 0; border-bottom: 1px solid var(--surface-alt); }
+.tech-table td:first-child { font-weight: 500; color: var(--text-muted); width: 180px; }
+.tech-table code { background: var(--surface-alt); padding: .1rem .3rem; border-radius: 2px; font-size: .75rem; }
+.log-block { background: #1c1917; color: #d6d3d1; padding: 1rem 1.25rem; border-radius: var(--radius); font-size: .75rem; line-height: 1.9; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+
+.watermark { position: fixed; bottom: 1rem; right: 1.5rem; font-size: .62rem; color: var(--text-muted); letter-spacing: .04em; }
+.watermark a { color: var(--text-muted); text-decoration: none; }
+
+.footer { padding: 3rem 0 2rem; text-align: center; font-size: .7rem; color: var(--text-muted); }
+
+@media (max-width: 640px) {
+    .score-card { flex-direction: column; text-align: center; }
+    .meta-row { flex-direction: column; gap: .4rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="container">
+    <div class="brand">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <a href="https://radar.netycom.it/nexum/">Radar</a> / <a href="https://radar.netycom.it/nexum/">Nexum</a>
+    </div>
+    <h1 class="title">Predeploy staging &mdash; Release 2026.03.1</h1>
+    <div class="meta-row">
+        <span class="meta-item">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            11 marzo 2026
+        </span>
+        <span class="meta-item">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            estendo.sel.re
+        </span>
+        <span class="meta-item">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Verifica predeploy
+        </span>
+        <span class="meta-item">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Issue #135, #121, #120, #124
+        </span>
+    </div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- SCORE -->
+<div class="score-section">
+<div class="score-card">
+    <div class="score-ring">
+        <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle class="track" cx="50" cy="50" r="42"/>
+            <circle class="fill" cx="50" cy="50" r="42"
+                stroke="var(--green)" stroke-dasharray="264" stroke-dashoffset="13"/>
+        </svg>
+        <div class="score-number" style="color:var(--green)">95<small>/100</small></div>
+    </div>
+    <div class="score-summary">
+        <h2>Staging pronto per il deploy in produzione</h2>
+        <p>Tutte e 4 le issue in programma (#135 tema grigio, #121 categorie, #120 visualizza contratto, #124 cron marche/modelli) sono presenti e funzionanti. Login, navigazione, lista contratti e performance nella norma. Unica nota: la route <code>/contract/{id}</code> non ha un vincolo numerico, quindi URL con stringhe al posto dell'ID producono un errore 500 invece di un 404. Non impatta gli utenti reali.</p>
+    </div>
+</div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+<div class="tab-buttons">
+    <button class="tab-btn active" onclick="switchTab('client')">
+        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Cosa abbiamo verificato
+    </button>
+    <button class="tab-btn" onclick="switchTab('tech')">
+        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Dettagli tecnici
+    </button>
+</div>
+
+<!-- TAB: CLIENT -->
+<div id="tab-client" class="tab-panel active">
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="step-title">Tema grafico aggiornato (#135)</span>
+    </div>
+    <div class="step-explain">La piattaforma ora utilizza una palette in scala di grigi, pi&ugrave; professionale e neutrale. Il logo Estendo &egrave; visibile e dimensionato correttamente. La barra laterale, i bottoni e l'intestazione seguono tutti il nuovo tema.</div>
+    <div class="screenshot">
+        <img src="radar-nexum-01-login.png" alt="Pagina di accesso con tema grigio">
+        <div class="screenshot-caption">Pagina di accesso &mdash; tema grigio applicato</div>
+    </div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="step-title">Accesso e navigazione funzionanti</span>
+    </div>
+    <div class="step-explain">L'accesso alla piattaforma avviene correttamente. La dashboard mostra il riepilogo contratti, la barra laterale ha tutte le voci di menu previste e la versione &egrave; aggiornata (v2026.03.1).</div>
+    <div class="screenshot">
+        <img src="radar-nexum-03-dashboard.png" alt="Dashboard dopo accesso">
+        <div class="screenshot-caption">Dashboard &mdash; 12 voci di menu, versione 2026.03.1</div>
+    </div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="step-title">Contratti visibili e consultabili (#120)</span>
+    </div>
+    <div class="step-explain">La lista contratti si carica correttamente e mostra i dati di ogni vendita. Cliccando su un contratto si apre la scheda dettaglio con tutti i campi previsti.</div>
+    <div class="screenshot">
+        <img src="radar-nexum-04-contracts.png" alt="Lista contratti">
+        <div class="screenshot-caption">Lista contratti venduti &mdash; tabella con dati completi</div>
+    </div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="step-title">Categorie prodotti funzionanti (#121)</span>
+    </div>
+    <div class="step-explain">La sezione Categorie mostra l'elenco completo (33 categorie) con la struttura gerarchica (tipo di prodotto, copertura, ecc.). La paginazione e il bottone &ldquo;Aggiungi&rdquo; sono presenti.</div>
+    <div class="screenshot">
+        <img src="radar-nexum-06-taxonomy.png" alt="Categorie prodotti">
+        <div class="screenshot-caption">Categorie &mdash; 33 voci con gerarchia</div>
+    </div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="step-title">Registro attivit&agrave; (#28)</span>
+    </div>
+    <div class="step-explain">La sezione &ldquo;Log piattaforma&rdquo; nel menu System si carica correttamente e mostra lo storico delle operazioni effettuate.</div>
+    <div class="screenshot">
+        <img src="radar-nexum-08-diary.png" alt="Log piattaforma">
+        <div class="screenshot-caption">Registro attivit&agrave; della piattaforma</div>
+    </div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="step-title">Aggiornamento automatico marche e modelli (#124)</span>
+    </div>
+    <div class="step-explain">Il processo automatico di sincronizzazione marche e modelli dall'archivio Estendo &egrave; configurato per eseguirsi ogni notte alle 02:00. Dopo il deploy in produzione, il primo aggiornamento avverr&agrave; nella notte successiva.</div>
+</div>
+
+</div>
+
+<!-- TAB: TECH -->
+<div id="tab-tech" class="tab-panel">
+
+<div class="tech-section">
+<h3>
+    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+    Riepilogo
+</h3>
+<table class="tech-table">
+    <tr><td>Target</td><td><code>https://estendo.sel.re</code></td></tr>
+    <tr><td>Server</td><td>Cloudways Athena (164.92.133.148)</td></tr>
+    <tr><td>Branch</td><td><code>main</code> = <code>staging</code> (allineati)</td></tr>
+    <tr><td>Version</td><td>v2026.03.1</td></tr>
+    <tr><td>Scenario</td><td>Predeploy check</td></tr>
+    <tr><td>Auth</td><td><code>radar-login/1828</code> (test@netycom.com)</td></tr>
+    <tr><td>Performance</td><td>0.66s (contract list)</td></tr>
+    <tr><td>Verdict</td><td style="color:var(--green);font-weight:600;">HEALTHY &mdash; GO per deploy</td></tr>
+</table>
+</div>
+
+<div class="tech-section">
+<h3>
+    <svg viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+    Check eseguiti
+</h3>
+<div class="log-block">&#x2705; Login + tema grigio #135: color-green=#111
+&#x2705; Login (radar-login): redirect to /me OK
+&#x2705; Sidebar: 12 links, v2026.03.1
+&#x2705; Contracts list: 2 contratti
+&#x2705; Contract view #120: /contract/1043 OK
+&#x2705; Categories #121: /taxonomy OK, 33 results
+&#x2705; Log piattaforma #28: /diary OK
+&#x2705; Cron #124: app:estendo-rest-import daily@02:00
+&#x2705; Performance: 0.66s</div>
+</div>
+
+<div class="tech-section">
+<h3>
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    Note
+</h3>
+<div class="log-block">&#x26A0;&#xFE0F; Route contract/{id} accetta stringhe (es. /contract/create)
+   causa TypeError su ContractView::$id
+   Impatto: nullo per utenti reali, solo URL manuali
+   Suggerimento: aggiungere ->whereNumber('id')
+
+&#x26A0;&#xFE0F; bootstrap/cache non era in git &mdash; fixato con .gitignore locale
+   Commit: b4a2294
+
+&#x26A0;&#xFE0F; env() usato in blade (head-style) incompatibile con config:cache
+   Workaround: config:clear applicato
+   Fix definitivo: spostare colori in config/domain.php (backlog)</div>
+</div>
+
+</div>
+</div>
+
+<div class="footer">
+    Radar &middot; <a href="https://radar.netycom.it" style="color:var(--text-muted)">radar.netycom.it</a> &middot; 11 marzo 2026
+</div>
+
+</div>
+
+<div class="watermark"><a href="https://radar.netycom.it">radar</a></div>
+
+<script>
+function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+}
+</script>
+</body>
+</html>

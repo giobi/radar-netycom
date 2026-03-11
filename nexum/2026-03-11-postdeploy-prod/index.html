@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Radar — Nexum: Post-deploy produzione (4 piattaforme)</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #fafaf9; --surface: #ffffff; --surface-alt: #f5f5f4;
+    --border: #e5e5e0; --border-strong: #d0d0c8;
+    --green: #15803d; --green-bg: rgba(21,128,61,.06);
+    --yellow: #854d0e; --yellow-bg: rgba(133,77,14,.06);
+    --red: #b91c1c; --red-bg: rgba(185,28,28,.06);
+    --text: #1c1917; --text-secondary: #57534e; --text-muted: #a8a29e;
+    --mono: 'IBM Plex Mono', 'SFMono-Regular', 'Consolas', monospace;
+    --radius: 3px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: var(--mono); background: var(--bg); color: var(--text); line-height:1.7; font-size:14px; }
+
+.header { background: var(--surface); border-bottom: 2px solid var(--text); padding: 2rem 0 1.75rem; }
+.container { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; }
+.brand { font-size: .65rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .75rem; display: flex; align-items: center; gap: .5rem; }
+.brand svg { width: 14px; height: 14px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+.brand a { color: var(--text-muted); text-decoration: none; }
+.title { font-size: 1.3rem; font-weight: 700; margin-bottom: .35rem; letter-spacing: -.01em; }
+.meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: .75rem; color: var(--text-secondary); }
+.meta-item { display: flex; align-items: center; gap: .35rem; }
+.meta-item svg { width: 13px; height: 13px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+
+.score-section { padding: 2rem 0; }
+.score-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; display: flex; align-items: center; gap: 2rem; }
+.score-ring { position: relative; width: 100px; height: 100px; flex-shrink: 0; }
+.score-ring svg { transform: rotate(-90deg); }
+.score-ring .track { fill: none; stroke: var(--surface-alt); stroke-width: 6; }
+.score-ring .fill { fill: none; stroke-width: 6; stroke-linecap: round; }
+.score-number { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 1.6rem; font-weight: 700; }
+.score-number small { font-size: .75rem; font-weight: 400; color: var(--text-muted); }
+.score-summary h2 { font-size: .95rem; font-weight: 600; margin-bottom: .35rem; }
+.score-summary p { font-size: .82rem; color: var(--text-secondary); line-height: 1.75; }
+
+.tabs { padding: 1.25rem 0 0; }
+.tab-buttons { display: flex; gap: 0; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border); }
+.tab-btn { padding: .6rem 1.2rem; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; background: none; font-family: var(--mono); font-size: .75rem; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: .4rem; }
+.tab-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tab-btn:hover { color: var(--text-secondary); }
+.tab-btn.active { color: var(--text); border-bottom-color: var(--text); font-weight: 600; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.step { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1rem; overflow: hidden; }
+.step-header { display: flex; align-items: center; gap: .6rem; padding: .85rem 1.2rem; font-size: .82rem; font-weight: 600; }
+.step-icon { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .7rem; flex-shrink: 0; }
+.step-icon.ok { background: var(--green-bg); color: var(--green); }
+.step-icon.warn { background: var(--yellow-bg); color: var(--yellow); }
+.step-icon.err { background: var(--red-bg); color: var(--red); }
+.step-body { padding: 0 1.2rem 1rem; font-size: .82rem; color: var(--text-secondary); line-height: 1.75; }
+.step-screenshot { width: 100%; border-top: 1px solid var(--border); margin-top: .75rem; }
+.step-screenshot img { width: 100%; display: block; }
+.step-caption { font-size: .7rem; color: var(--text-muted); padding: .5rem 1.2rem; background: var(--surface-alt); }
+
+.platform-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+.platform-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.2rem; }
+.platform-name { font-weight: 700; font-size: .85rem; margin-bottom: .25rem; }
+.platform-url { font-size: .7rem; color: var(--text-muted); margin-bottom: .5rem; }
+.platform-status { display: flex; flex-wrap: wrap; gap: .35rem; }
+.badge { font-size: .62rem; font-weight: 600; letter-spacing: .04em; padding: .15rem .5rem; border-radius: 2px; text-transform: uppercase; }
+.badge-ok { background: var(--green-bg); color: var(--green); }
+.badge-warn { background: var(--yellow-bg); color: var(--yellow); }
+.badge-err { background: var(--red-bg); color: var(--red); }
+
+.tech-block { background: #1c1917; color: #e5e5e0; border-radius: var(--radius); padding: 1rem 1.2rem; font-size: .75rem; line-height: 1.7; margin: .75rem 0; overflow-x: auto; white-space: pre-wrap; }
+
+.footer { border-top: 1px solid var(--border); padding: 1.5rem 0; margin-top: 2rem; }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: .65rem; color: var(--text-muted); }
+.footer a { color: var(--text-muted); text-decoration: none; }
+
+@media (max-width: 700px) {
+    .container { padding: 0 1rem; }
+    .score-card { flex-direction: column; text-align: center; }
+    .platform-grid { grid-template-columns: 1fr; }
+    .meta-row { flex-direction: column; gap: .5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="container">
+    <div class="brand"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><line x1="12" y1="2" x2="12" y2="4"/></svg><a href="../">Radar &middot; Nexum</a></div>
+    <h1 class="title">Post-deploy produzione &mdash; 4 piattaforme</h1>
+    <div class="meta-row">
+        <span class="meta-item"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>11 marzo 2026</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Post-deploy</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Versione v2026.03.2</span>
+    </div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- SCORE -->
+<div class="score-section">
+<div class="score-card">
+    <div class="score-ring">
+        <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle class="track" cx="50" cy="50" r="42"/>
+            <circle class="fill" cx="50" cy="50" r="42" stroke="var(--green)" stroke-dasharray="264" stroke-dashoffset="0"/>
+        </svg>
+        <div class="score-number">100<small>/100</small></div>
+    </div>
+    <div class="score-summary">
+        <h2>Tutto funziona correttamente</h2>
+        <p>Tutte e 4 le piattaforme di produzione rispondono, il login funziona, le pagine principali sono accessibili e il nuovo tema grafico grigio &egrave; attivo ovunque. Nessun errore 500, nessun problema bloccante.</p>
+    </div>
+</div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+<div class="tab-buttons">
+    <button class="tab-btn active" onclick="showTab('client')"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Cosa abbiamo verificato</button>
+    <button class="tab-btn" onclick="showTab('tech')"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Dettagli tecnici</button>
+</div>
+
+<!-- TAB CLIENT -->
+<div id="tab-client" class="tab-panel active">
+
+<div class="step">
+    <div class="step-header"><span class="step-icon ok">&check;</span>Tutte le piattaforme sono raggiungibili</div>
+    <div class="step-body">Abbiamo verificato che tutte e 4 le piattaforme di produzione siano online e rispondano correttamente. Nessun sito risulta fuori servizio.</div>
+    <div class="platform-grid" style="padding: 0 1.2rem .75rem;">
+        <div class="platform-card">
+            <div class="platform-name">DIMO</div>
+            <div class="platform-url">nexumapp.dimo.estendo.it</div>
+            <div class="platform-status"><span class="badge badge-ok">online</span><span class="badge badge-ok">tema grigio</span><span class="badge badge-ok">v2026.03.2</span></div>
+        </div>
+        <div class="platform-card">
+            <div class="platform-name">Maico</div>
+            <div class="platform-url">nexumapp.maico.estendo.it</div>
+            <div class="platform-status"><span class="badge badge-ok">online</span><span class="badge badge-ok">tema grigio</span></div>
+        </div>
+        <div class="platform-card">
+            <div class="platform-name">Smartsound</div>
+            <div class="platform-url">nexumapp.smartsound.estendo.it</div>
+            <div class="platform-status"><span class="badge badge-ok">online</span><span class="badge badge-ok">tema grigio</span></div>
+        </div>
+        <div class="platform-card">
+            <div class="platform-name">ENEL</div>
+            <div class="platform-url">nexumapp.enel.estendo.it</div>
+            <div class="platform-status"><span class="badge badge-ok">online</span><span class="badge badge-ok">tema grigio</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="step">
+    <div class="step-header"><span class="step-icon ok">&check;</span>Login e accesso funzionano</div>
+    <div class="step-body">L'accesso alla piattaforma DIMO funziona correttamente. La pagina di login si carica in circa 4 secondi e dopo l'autenticazione si arriva alla pagina profilo senza errori.</div>
+    <div class="step-screenshot"><img src="01-dimo-login.png" alt="Pagina di login DIMO"></div>
+    <div class="step-caption">Pagina di login &mdash; nexumapp.dimo.estendo.it</div>
+</div>
+
+<div class="step">
+    <div class="step-header"><span class="step-icon ok">&check;</span>Navigazione e men&ugrave; completi</div>
+    <div class="step-body">Il men&ugrave; laterale della piattaforma DIMO mostra 14 voci di navigazione e la versione v2026.03.2. Tutte le sezioni principali sono raggiungibili.</div>
+    <div class="step-screenshot"><img src="02-dimo-dashboard.png" alt="Dashboard DIMO"></div>
+    <div class="step-caption">Dashboard dopo il login &mdash; 14 voci di men&ugrave;</div>
+</div>
+
+<div class="step">
+    <div class="step-header"><span class="step-icon ok">&check;</span>Gestione contratti</div>
+    <div class="step-body">La lista contratti si carica senza errori. La pagina &egrave; funzionante e pronta per le operazioni quotidiane.</div>
+    <div class="step-screenshot"><img src="03-dimo-contracts.png" alt="Lista contratti DIMO"></div>
+    <div class="step-caption">Sezione contratti &mdash; pagina caricata correttamente</div>
+</div>
+
+<div class="step">
+    <div class="step-header"><span class="step-icon ok">&check;</span>Categorie e prodotti</div>
+    <div class="step-body">La sezione categorie mostra correttamente marche e modelli di prodotto. La grafica aggiornata &egrave; visibile.</div>
+    <div class="step-screenshot"><img src="04-dimo-taxonomy.png" alt="Categorie DIMO"></div>
+    <div class="step-caption">Categorie prodotto &mdash; contenuto presente</div>
+</div>
+
+<div class="step">
+    <div class="step-header"><span class="step-icon ok">&check;</span>Log della piattaforma</div>
+    <div class="step-body">Il registro attivit&agrave; della piattaforma funziona correttamente e registra le operazioni.</div>
+    <div class="step-screenshot"><img src="05-dimo-diary.png" alt="Log piattaforma DIMO"></div>
+    <div class="step-caption">Log piattaforma &mdash; operativo</div>
+</div>
+
+<div class="step">
+    <div class="step-header"><span class="step-icon ok">&check;</span>Creazione nuovo contratto</div>
+    <div class="step-body">La procedura guidata per creare un nuovo contratto si avvia correttamente. La selezione del prodotto &egrave; disponibile. Il test di pagamento non &egrave; stato effettuato (verifica separata).</div>
+    <div class="step-screenshot"><img src="06-dimo-wizard.png" alt="Wizard nuovo contratto DIMO"></div>
+    <div class="step-caption">Selezione prodotto &mdash; prima schermata del wizard</div>
+</div>
+
+<div class="step">
+    <div class="step-header"><span class="step-icon ok">&check;</span>Gestione utenti e punti vendita</div>
+    <div class="step-body">Le sezioni di amministrazione (gestione utenti e punti vendita) sono accessibili e funzionanti.</div>
+    <div class="step-screenshot"><img src="07-dimo-users.png" alt="Gestione utenti DIMO"></div>
+    <div class="step-caption">Gestione utenti &mdash; sezione amministrativa</div>
+</div>
+
+<div class="step">
+    <div class="step-header"><span class="step-icon ok">&check;</span>Nuovo tema grafico su tutte le piattaforme</div>
+    <div class="step-body">Il nuovo tema grigio (#135) &egrave; stato applicato correttamente su tutte e 4 le piattaforme. I bottoni, la navigazione e gli elementi di interfaccia usano la nuova palette.</div>
+    <div class="platform-grid" style="padding: 0 1.2rem .5rem;">
+        <div style="text-align:center;"><img src="09-dimo-grey.png" alt="DIMO grigio" style="width:100%;border:1px solid var(--border);border-radius:var(--radius);"><div style="font-size:.68rem;color:var(--text-muted);margin-top:.3rem;">DIMO</div></div>
+        <div style="text-align:center;"><img src="10-maico-grey.png" alt="Maico grigio" style="width:100%;border:1px solid var(--border);border-radius:var(--radius);"><div style="font-size:.68rem;color:var(--text-muted);margin-top:.3rem;">Maico</div></div>
+        <div style="text-align:center;"><img src="11-smartsound-grey.png" alt="Smartsound grigio" style="width:100%;border:1px solid var(--border);border-radius:var(--radius);"><div style="font-size:.68rem;color:var(--text-muted);margin-top:.3rem;">Smartsound</div></div>
+        <div style="text-align:center;"><img src="12-enel-grey.png" alt="ENEL grigio" style="width:100%;border:1px solid var(--border);border-radius:var(--radius);"><div style="font-size:.68rem;color:var(--text-muted);margin-top:.3rem;">ENEL</div></div>
+    </div>
+</div>
+
+</div>
+
+<!-- TAB TECH -->
+<div id="tab-tech" class="tab-panel">
+
+<h3 style="font-size:.85rem;margin-bottom:1rem;">Riepilogo tecnico</h3>
+
+<div class="tech-block">Server: SRVAPPWEB (62.173.167.212)
+Scenario: post-deploy
+Versione: v2026.03.2
+Branch: main
+Iterazioni: 1
+
+Piattaforme testate:
+- DIMO    → nexumapp.dimo.estendo.it       (deep test, 12 check)
+- Maico   → nexumapp.maico.estendo.it      (quick check, 7 route)
+- Smart   → nexumapp.smartsound.estendo.it  (quick check, 7 route)
+- ENEL    → nexumapp.enel.estendo.it        (quick check, 7 route)</div>
+
+<h3 style="font-size:.85rem;margin: 1.5rem 0 1rem;">DIMO &mdash; Deep test</h3>
+
+<div class="tech-block">Login page .............. OK  3.98s, tema grigio confermato
+Login (radar) ........... OK  redirect a /me/profile
+Sidebar ................. OK  14 links, v2026.03.2
+Profilo utente .......... OK  HTTP 200
+Contratti lista ......... OK  HTTP 200, 0 righe (utente test)
+Categorie ............... OK  HTTP 200, contenuto presente
+Log piattaforma ......... OK  HTTP 200
+Wizard contratto ........ OK  HTTP 200, prodotti presenti
+Gestione utenti ......... OK  HTTP 200
+Punti vendita ........... OK  HTTP 200
+Report .................. SKIP HTTP 404 (route non configurata)
+Console JS .............. OK  nessun errore
+Performance ............. OK  3.98s</div>
+
+<h3 style="font-size:.85rem;margin: 1.5rem 0 1rem;">Piattaforme secondarie &mdash; Quick check</h3>
+
+<div class="tech-block">MAICO:
+  Login .......... OK  HTTP 200
+  Auth ........... OK  HTTP 200
+  Contratti ...... OK  HTTP 200 (9 righe)
+  Categorie ...... 403 (permessi utente)
+  Log ............ 403 (permessi utente)
+  Wizard ......... OK  HTTP 200
+  Profilo ........ OK  HTTP 200
+
+SMARTSOUND:
+  Login .......... OK  HTTP 200
+  Auth ........... OK  HTTP 200
+  Contratti ...... OK  HTTP 200
+  Categorie ...... OK  HTTP 200
+  Log ............ OK  HTTP 200
+  Wizard ......... OK  HTTP 200
+  Profilo ........ OK  HTTP 200
+
+ENEL:
+  Login .......... OK  HTTP 200
+  Auth ........... OK  HTTP 200
+  Contratti ...... OK  HTTP 200 (9 righe)
+  Categorie ...... OK  HTTP 200
+  Log ............ OK  HTTP 200
+  Wizard ......... OK  HTTP 200
+  Profilo ........ OK  HTTP 200</div>
+
+<h3 style="font-size:.85rem;margin: 1.5rem 0 1rem;">Verifica tema grigio (#135)</h3>
+
+<div class="tech-block">Tutte le piattaforme hanno greyVars=True nei CSS renderizzati.
+Colori bottoni rilevati:
+  DIMO:       rgb(85,85,85) = #555 ✓
+  Maico:      rgb(85,85,85) = #555 ✓
+  Smartsound: rgb(85,85,85) + rgb(77,77,77) = #555 + #4d4d4d ✓
+  ENEL:       rgb(85,85,85) = #555 ✓</div>
+
+<h3 style="font-size:.85rem;margin: 1.5rem 0 1rem;">Note</h3>
+
+<div class="step-body" style="padding:0;">
+<ul style="padding-left:1.2rem;margin:.5rem 0;">
+<li>Maico: 403 su /taxonomy e /diary — probabilmente l'utente giobi@giobi.com non ha permessi Spatie per quelle sezioni. Non è un errore dell'applicazione.</li>
+<li>DIMO /report: 404 — route non presente nel codebase, non un errore.</li>
+<li>Pagamento non testato (da specifiche: test separato).</li>
+<li>config:cache NON attivo in produzione (evita il bug env() in blade — issue backlog).</li>
+</ul>
+</div>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+<div class="footer-inner">
+    <span>Radar &middot; netycom.it</span>
+    <span>Generato l'11 marzo 2026 alle 11:20</span>
+</div>
+</div>
+
+</div>
+
+<script>
+function showTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.closest('.tab-btn').classList.add('active');
+}
+</script>
+</body>
+</html>

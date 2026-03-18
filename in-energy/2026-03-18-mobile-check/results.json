@@ -1,0 +1,415 @@
+[
+  {
+    "name": "homepage",
+    "url": "https://promo.in-energy.it/",
+    "title": "Convenzioni \u2013 In Energy",
+    "issues": [
+      "Touch target troppo piccoli (10 elementi < 44px)"
+    ],
+    "has_overflow": false,
+    "small_text_count": 0,
+    "small_targets_count": 10,
+    "small_targets": [
+      {
+        "tag": "A",
+        "w": 1,
+        "h": 1,
+        "text": "Vai al contenuto"
+      },
+      {
+        "tag": "A",
+        "w": 212,
+        "h": 32,
+        "text": ""
+      },
+      {
+        "tag": "A",
+        "w": 370,
+        "h": 32,
+        "text": ""
+      },
+      {
+        "tag": "A",
+        "w": 89,
+        "h": 16,
+        "text": "cookie policy"
+      },
+      {
+        "tag": "INPUT",
+        "w": 48,
+        "h": 24,
+        "text": ""
+      }
+    ],
+    "broken_tables": 0,
+    "viewport_meta": "width=device-width, initial-scale=1"
+  },
+  {
+    "name": "altair",
+    "url": "https://promo.in-energy.it/gruppo-altair",
+    "title": "Gruppo Altair \u2013 In Energy",
+    "issues": [
+      "Testo troppo piccolo (2 elementi < 12px)",
+      "Touch target troppo piccoli (10 elementi < 44px)"
+    ],
+    "has_overflow": false,
+    "small_text_count": 2,
+    "small_targets_count": 10,
+    "small_targets": [
+      {
+        "tag": "A",
+        "w": 1,
+        "h": 1,
+        "text": "Vai al contenuto"
+      },
+      {
+        "tag": "A",
+        "w": 212,
+        "h": 32,
+        "text": ""
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 346,
+        "h": 42,
+        "text": "Condizioni generali dell'offer"
+      }
+    ],
+    "broken_tables": 0,
+    "viewport_meta": "width=device-width, initial-scale=1"
+  },
+  {
+    "name": "uivco",
+    "url": "https://promo.in-energy.it/unione-industriale-vco",
+    "title": "Unione Industriale del VCO \u2013 In Energy",
+    "issues": [
+      "Testo troppo piccolo (2 elementi < 12px)",
+      "Touch target troppo piccoli (10 elementi < 44px)"
+    ],
+    "has_overflow": false,
+    "small_text_count": 2,
+    "small_targets_count": 10,
+    "small_targets": [
+      {
+        "tag": "A",
+        "w": 1,
+        "h": 1,
+        "text": "Vai al contenuto"
+      },
+      {
+        "tag": "A",
+        "w": 212,
+        "h": 32,
+        "text": ""
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 346,
+        "h": 42,
+        "text": "Condizioni generali dell'offer"
+      }
+    ],
+    "broken_tables": 0,
+    "viewport_meta": "width=device-width, initial-scale=1"
+  },
+  {
+    "name": "tigros",
+    "url": "https://promo.in-energy.it/convenzione-tigros",
+    "title": "Tigros \u2013 In Energy",
+    "issues": [
+      "Testo troppo piccolo (2 elementi < 12px)",
+      "Touch target troppo piccoli (10 elementi < 44px)"
+    ],
+    "has_overflow": false,
+    "small_text_count": 2,
+    "small_targets_count": 10,
+    "small_targets": [
+      {
+        "tag": "A",
+        "w": 1,
+        "h": 1,
+        "text": "Vai al contenuto"
+      },
+      {
+        "tag": "A",
+        "w": 212,
+        "h": 32,
+        "text": ""
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 346,
+        "h": 42,
+        "text": "Condizioni generali dell'offer"
+      }
+    ],
+    "broken_tables": 0,
+    "viewport_meta": "width=device-width, initial-scale=1"
+  },
+  {
+    "name": "allafonte",
+    "url": "https://promo.in-energy.it/allafonte",
+    "title": "Cooperativa Allafonte \u2013 In Energy",
+    "issues": [
+      "Testo troppo piccolo (2 elementi < 12px)",
+      "Touch target troppo piccoli (10 elementi < 44px)"
+    ],
+    "has_overflow": false,
+    "small_text_count": 2,
+    "small_targets_count": 10,
+    "small_targets": [
+      {
+        "tag": "A",
+        "w": 1,
+        "h": 1,
+        "text": "Vai al contenuto"
+      },
+      {
+        "tag": "A",
+        "w": 212,
+        "h": 32,
+        "text": ""
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 346,
+        "h": 42,
+        "text": "Condizioni generali dell'offer"
+      }
+    ],
+    "broken_tables": 0,
+    "viewport_meta": "width=device-width, initial-scale=1"
+  },
+  {
+    "name": "api",
+    "url": "https://promo.in-energy.it/convenzione-api",
+    "title": "API - Associazione Poliziotti Italiani \u2013 In Energy",
+    "issues": [
+      "Testo troppo piccolo (2 elementi < 12px)",
+      "Touch target troppo piccoli (10 elementi < 44px)"
+    ],
+    "has_overflow": false,
+    "small_text_count": 2,
+    "small_targets_count": 10,
+    "small_targets": [
+      {
+        "tag": "A",
+        "w": 1,
+        "h": 1,
+        "text": "Vai al contenuto"
+      },
+      {
+        "tag": "A",
+        "w": 212,
+        "h": 32,
+        "text": ""
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 346,
+        "h": 42,
+        "text": "Condizioni generali dell'offer"
+      }
+    ],
+    "broken_tables": 0,
+    "viewport_meta": "width=device-width, initial-scale=1"
+  },
+  {
+    "name": "fials",
+    "url": "https://promo.in-energy.it/convenzione-fials",
+    "title": "FIALS \u2013 In Energy",
+    "issues": [
+      "Testo troppo piccolo (2 elementi < 12px)",
+      "Touch target troppo piccoli (10 elementi < 44px)"
+    ],
+    "has_overflow": false,
+    "small_text_count": 2,
+    "small_targets_count": 10,
+    "small_targets": [
+      {
+        "tag": "A",
+        "w": 1,
+        "h": 1,
+        "text": "Vai al contenuto"
+      },
+      {
+        "tag": "A",
+        "w": 212,
+        "h": 32,
+        "text": ""
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 346,
+        "h": 42,
+        "text": "Condizioni generali dell'offer"
+      }
+    ],
+    "broken_tables": 0,
+    "viewport_meta": "width=device-width, initial-scale=1"
+  },
+  {
+    "name": "sic",
+    "url": "https://promo.in-energy.it/convenzione-sic",
+    "title": "SIC - Sindacato Indipendente Carabinieri \u2013 In Energy",
+    "issues": [
+      "Testo troppo piccolo (2 elementi < 12px)",
+      "Touch target troppo piccoli (10 elementi < 44px)"
+    ],
+    "has_overflow": false,
+    "small_text_count": 2,
+    "small_targets_count": 10,
+    "small_targets": [
+      {
+        "tag": "A",
+        "w": 1,
+        "h": 1,
+        "text": "Vai al contenuto"
+      },
+      {
+        "tag": "A",
+        "w": 212,
+        "h": 32,
+        "text": ""
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 346,
+        "h": 42,
+        "text": "Condizioni generali dell'offer"
+      }
+    ],
+    "broken_tables": 0,
+    "viewport_meta": "width=device-width, initial-scale=1"
+  },
+  {
+    "name": "silf",
+    "url": "https://promo.in-energy.it/convenzione-silf",
+    "title": "SILF - Sindacato Italiano Lavoratori Finanzieri \u2013 In Energy",
+    "issues": [
+      "Testo troppo piccolo (2 elementi < 12px)",
+      "Touch target troppo piccoli (10 elementi < 44px)"
+    ],
+    "has_overflow": false,
+    "small_text_count": 2,
+    "small_targets_count": 10,
+    "small_targets": [
+      {
+        "tag": "A",
+        "w": 1,
+        "h": 1,
+        "text": "Vai al contenuto"
+      },
+      {
+        "tag": "A",
+        "w": 212,
+        "h": 32,
+        "text": ""
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 224,
+        "h": 42,
+        "text": "Scheda sintetica"
+      },
+      {
+        "tag": "A",
+        "w": 346,
+        "h": 42,
+        "text": "Condizioni generali dell'offer"
+      }
+    ],
+    "broken_tables": 0,
+    "viewport_meta": "width=device-width, initial-scale=1"
+  }
+]

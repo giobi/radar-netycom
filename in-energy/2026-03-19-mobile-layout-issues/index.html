@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Radar — InEnergy Promo: Problemi layout mobile pagina Gruppo Altair</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #fafaf9; --surface: #ffffff; --surface-alt: #f5f5f4;
+    --border: #e5e5e0; --border-strong: #d0d0c8;
+    --green: #15803d; --green-bg: rgba(21,128,61,.06);
+    --yellow: #854d0e; --yellow-bg: rgba(133,77,14,.06);
+    --red: #b91c1c; --red-bg: rgba(185,28,28,.06);
+    --text: #1c1917; --text-secondary: #57534e; --text-muted: #a8a29e;
+    --mono: 'IBM Plex Mono', 'SFMono-Regular', 'Consolas', monospace;
+    --radius: 3px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: var(--mono); background: var(--bg); color: var(--text); line-height:1.7; font-size:14px; }
+
+.header { background: var(--surface); border-bottom: 2px solid var(--text); padding: 2rem 0 1.75rem; }
+.container { max-width: 1080px; margin: 0 auto; padding: 0 2.5rem; }
+.brand { font-size: .65rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .75rem; display: flex; align-items: center; gap: .5rem; }
+.brand svg { width: 14px; height: 14px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+.brand a { color: var(--text-muted); text-decoration: none; }
+.title { font-size: 1.3rem; font-weight: 700; margin-bottom: .35rem; letter-spacing: -.01em; }
+.meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: .75rem; color: var(--text-secondary); }
+.meta-item { display: flex; align-items: center; gap: .35rem; }
+.meta-item svg { width: 13px; height: 13px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+
+.score-section { padding: 2rem 0; }
+.score-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; display: flex; align-items: center; gap: 2rem; }
+.score-ring { position: relative; width: 100px; height: 100px; flex-shrink: 0; }
+.score-ring svg { transform: rotate(-90deg); }
+.score-ring .track { fill: none; stroke: var(--surface-alt); stroke-width: 6; }
+.score-ring .fill { fill: none; stroke-width: 6; stroke-linecap: round; }
+.score-number { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 1.6rem; font-weight: 700; }
+.score-number small { font-size: .75rem; font-weight: 400; color: var(--text-muted); }
+.score-summary h2 { font-size: .95rem; font-weight: 600; margin-bottom: .35rem; }
+.score-summary p { font-size: .82rem; color: var(--text-secondary); line-height: 1.75; }
+
+.tabs { padding: 1.25rem 0 0; }
+.tab-buttons { display: flex; gap: 0; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border); }
+.tab-btn { padding: .6rem 1.2rem; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; background: none; font-family: var(--mono); font-size: .75rem; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: .4rem; }
+.tab-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tab-btn:hover { color: var(--text-secondary); }
+.tab-btn.active { color: var(--text); border-bottom-color: var(--text); font-weight: 600; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.step { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: .75rem; }
+.step-header { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; }
+.step-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step-icon svg { width: 12px; height: 12px; stroke-width: 2.5; fill: none; }
+.step-icon.ok { background: var(--green-bg); }
+.step-icon.ok svg { stroke: var(--green); }
+.step-icon.warn { background: var(--yellow-bg); }
+.step-icon.warn svg { stroke: var(--yellow); }
+.step-icon.fail { background: var(--red-bg); }
+.step-icon.fail svg { stroke: var(--red); }
+.step-title { font-weight: 600; font-size: .85rem; }
+.step-explain { font-size: .82rem; color: var(--text-secondary); margin-bottom: .75rem; line-height: 1.8; }
+.step-img { border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; margin-top: .5rem; }
+.step-img img { width: 100%; display: block; }
+.step-img-caption { padding: .4rem .75rem; background: var(--surface-alt); font-size: .7rem; color: var(--text-muted); }
+.step-img-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-top: .5rem; }
+
+.tech-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: .75rem; }
+.tech-section h3 { font-size: .78rem; font-weight: 600; margin-bottom: .75rem; letter-spacing: .02em; display: flex; align-items: center; gap: .4rem; }
+.tech-section h3 svg { width: 13px; height: 13px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+.log-block { background: #1c1917; color: #d6d3d1; padding: 1rem 1.25rem; border-radius: var(--radius); font-size: .75rem; line-height: 1.9; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+.tech-table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+.tech-table th { text-align: left; font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); padding: .4rem 0; border-bottom: 1px solid var(--border); }
+.tech-table td { padding: .4rem 0; border-bottom: 1px solid var(--surface-alt); }
+.tech-table code { background: var(--surface-alt); padding: .1rem .3rem; border-radius: 2px; font-size: .75rem; }
+
+.timeline { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; }
+.timeline h3 { font-size: .78rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: .02em; display: flex; align-items: center; gap: .4rem; }
+.timeline h3 svg { width: 13px; height: 13px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+.tl { position: relative; padding-left: 1.5rem; }
+.tl::before { content: ''; position: absolute; left: 5px; top: 4px; bottom: 4px; width: 1px; background: var(--border-strong); }
+.tl-item { position: relative; margin-bottom: .75rem; display: flex; align-items: baseline; gap: .75rem; }
+.tl-item:last-child { margin-bottom: 0; }
+.tl-dot { position: absolute; left: -1.5rem; top: 6px; width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--border-strong); background: var(--surface); flex-shrink: 0; }
+.tl-dot.red { border-color: var(--red); background: var(--red-bg); }
+.tl-dot.yellow { border-color: var(--yellow); background: var(--yellow-bg); }
+.tl-dot.green { border-color: var(--green); background: var(--green-bg); }
+.tl-time { font-size: .72rem; font-weight: 600; color: var(--text-muted); min-width: 42px; flex-shrink: 0; }
+.tl-text { font-size: .8rem; color: var(--text-secondary); }
+
+.watermark { position: fixed; bottom: 1rem; right: 1.5rem; font-size: .62rem; color: var(--text-muted); letter-spacing: .04em; }
+.watermark a { color: var(--text-muted); text-decoration: none; }
+.watermark a:hover { color: var(--text-secondary); }
+
+@media (max-width: 640px) {
+    .score-card { flex-direction: column; text-align: center; }
+    .meta-row { flex-direction: column; gap: .4rem; }
+    .step-img-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="container">
+    <div class="brand">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><line x1="12" y1="2" x2="12" y2="4"/></svg>
+        <a href="../../dashboard/">Radar</a>
+    </div>
+    <h1 class="title">InEnergy Promo &mdash; Problemi di layout mobile sulla pagina Gruppo Altair</h1>
+    <div class="meta-row">
+        <span class="meta-item"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>19 marzo 2026</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="12"/></svg>1 iterazione</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Verifica</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>promo.in-energy.it/gruppo-altair</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>Mobile (390&times;844)</span>
+    </div>
+</div>
+</div>
+
+<div class="container">
+
+<div class="score-section">
+<div class="score-card">
+    <div class="score-ring">
+        <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle class="track" cx="50" cy="50" r="42"/>
+            <circle class="fill" cx="50" cy="50" r="42" stroke="var(--yellow)" stroke-dasharray="263.9" stroke-dashoffset="79.2"/>
+        </svg>
+        <div class="score-number">70<small>/100</small></div>
+    </div>
+    <div class="score-summary">
+        <h2>Problemi significativi di layout mobile</h2>
+        <p>La pagina funziona e i contenuti sono accessibili, ma la resa su telefono presenta diversi difetti visivi: un'immagine mancante che lascia un grande buco vuoto, i link ai documenti PDF con allineamenti incoerenti, le spaziature tra le sezioni irregolari, e la zona &ldquo;Il nostro impegno per l'ambiente&rdquo; che manca di respiro. Nessun errore funzionale, ma l'impressione complessiva &egrave; poco curata.</p>
+    </div>
+</div>
+</div>
+
+<div class="timeline">
+    <h3><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Cronologia controllo</h3>
+    <div class="tl">
+        <div class="tl-item"><div class="tl-dot yellow"></div><span class="tl-time">14:20</span><span class="tl-text">Apertura pagina su simulazione mobile (iPhone 12 Pro, 390&times;844px)</span></div>
+        <div class="tl-item"><div class="tl-dot red"></div><span class="tl-time">14:21</span><span class="tl-text">Immagine &ldquo;happy family&rdquo; mancante &mdash; buco visivo di circa 400px dopo &ldquo;Perch&eacute; aderire&rdquo;</span></div>
+        <div class="tl-item"><div class="tl-dot yellow"></div><span class="tl-time">14:22</span><span class="tl-text">Link PDF con allineamenti misti (sinistra/centro) e spaziature irregolari</span></div>
+        <div class="tl-item"><div class="tl-dot yellow"></div><span class="tl-time">14:23</span><span class="tl-text">Sezione &ldquo;Parliamone insieme&rdquo;: 4 passi con gap eccessivi tra numerazione e testo</span></div>
+        <div class="tl-item"><div class="tl-dot yellow"></div><span class="tl-time">14:24</span><span class="tl-text">Sezione &ldquo;Il nostro impegno per l'ambiente&rdquo;: nessuno spazio sopra, poco sotto</span></div>
+        <div class="tl-item"><div class="tl-dot red"></div><span class="tl-time">14:25</span><span class="tl-text">4 errori 404 in console (3 varianti immagine + 1 risorsa)</span></div>
+    </div>
+</div>
+
+<div class="tabs">
+<div class="tab-buttons">
+    <button class="tab-btn active" onclick="switchTab('simple', this)">
+        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Cosa abbiamo trovato
+    </button>
+    <button class="tab-btn" onclick="switchTab('tech', this)">
+        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Dettagli tecnici
+    </button>
+</div>
+
+<div id="tab-simple" class="tab-panel active">
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon fail"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+        <span class="step-title">Immagine mancante: buco vuoto nella pagina</span>
+    </div>
+    <p class="step-explain">Dopo la sezione &ldquo;Perch&eacute; aderire&rdquo; (quella con l'elenco dei vantaggi) c'&egrave; un grande spazio vuoto alto circa 400 pixel &mdash; quasi met&agrave; dello schermo del telefono. Succede perch&eacute; la pagina cerca di mostrare un'immagine di una famiglia, ma il file non si trova pi&ugrave; sul server. Il telefono prova a caricare una versione ridotta dell'immagine, non la trova, e al suo posto lascia il vuoto.</p>
+    <div class="step-img">
+        <img src="04-broken-image.png" alt="Buco vuoto dove dovrebbe esserci l'immagine">
+        <div class="step-img-caption">Lo spazio vuoto tra &ldquo;Perch&eacute; aderire&rdquo; e la scheda offerta Luce &mdash; qui dovrebbe esserci un'immagine</div>
+    </div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon warn"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <span class="step-title">Link ai documenti PDF: allineamenti a caso</span>
+    </div>
+    <p class="step-explain">I link per scaricare i documenti (condizioni economiche, scheda sintetica, ecc.) non hanno un allineamento uniforme. Nella scheda Luce sono allineati a sinistra. Nella scheda Gas, i primi due sono a sinistra ma il terzo (&ldquo;Condizioni generali dell'offerta&rdquo;) &egrave; centrato e posizionato <strong>fuori dalla scheda</strong>, separato dal bottone &ldquo;Aderisci ora&rdquo;. Sembra un elemento orfano, dimenticato l&igrave;.</p>
+    <div class="step-img-row">
+        <div class="step-img">
+            <img src="06-pdf-links-luce.png" alt="Link PDF offerta Luce">
+            <div class="step-img-caption">Offerta Luce: link a sinistra, ordinati</div>
+        </div>
+        <div class="step-img">
+            <img src="08-pdf-links-gas.png" alt="Link PDF offerta Gas con allineamento misto">
+            <div class="step-img-caption">Offerta Gas: &ldquo;Condizioni generali&rdquo; fuori dalla scheda, centrato</div>
+        </div>
+    </div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon warn"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <span class="step-title">I 4 passaggi: spaziature troppo larghe e irregolari</span>
+    </div>
+    <p class="step-explain">La sezione &ldquo;Parliamone insieme&rdquo; mostra 4 passaggi numerati (invia bolletta, specifica che sei dipendente, ricevi consulenza, attiva). Su telefono le distanze tra un passaggio e l'altro sono esagerate: c'&egrave; troppo spazio vuoto tra il numero e il testo, e tra un punto e il successivo. Inoltre le spaziature non sono uguali fra loro: il passaggio 2 &egrave; pi&ugrave; compatto del 3, il 4 &egrave; diverso ancora. L'effetto &egrave; di una pagina che &ldquo;galleggia&rdquo;.</p>
+    <div class="step-img-row">
+        <div class="step-img">
+            <img src="09-4punti.png" alt="I 4 passaggi con spaziature eccessive">
+            <div class="step-img-caption">Passaggi 1-3: gap eccessivi tra numero e testo</div>
+        </div>
+        <div class="step-img">
+            <img src="10-4punti-cont.png" alt="Continuazione dei 4 passaggi">
+            <div class="step-img-caption">Passaggi 3-4: spaziature diverse dai precedenti</div>
+        </div>
+    </div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon warn"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <span class="step-title">&ldquo;Il nostro impegno per l'ambiente&rdquo;: manca respiro</span>
+    </div>
+    <p class="step-explain">La sezione verde &ldquo;Il nostro impegno per l'ambiente&rdquo; &egrave; attaccata alla sezione precedente senza nessuno spazio di separazione (0 pixel sopra). Sotto, il distacco dalla sezione successiva &egrave; minimo. L'effetto &egrave; che il blocco sembra schiacciato, senza il respiro visivo necessario per dare importanza al messaggio ambientale.</p>
+    <div class="step-img">
+        <img src="11-impegno-ambiente.png" alt="Sezione impegno ambiente senza spazi">
+        <div class="step-img-caption">La sezione verde parte immediatamente dopo il testo &mdash; zero margine superiore</div>
+    </div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="step-title">Contenuti e offerte: tutto leggibile</span>
+    </div>
+    <p class="step-explain">I contenuti importanti (prezzi delle offerte Luce e Gas, bottoni &ldquo;Aderisci ora&rdquo;, modulo di contatto, FAQ) funzionano correttamente e sono leggibili. I problemi sono puramente estetici e di spaziatura, non funzionali.</p>
+    <div class="step-img-row">
+        <div class="step-img">
+            <img src="02-hero.png" alt="Hero section mobile">
+            <div class="step-img-caption">Intestazione della pagina</div>
+        </div>
+        <div class="step-img">
+            <img src="05-offerta-luce.png" alt="Offerta Luce">
+            <div class="step-img-caption">Scheda offerta Luce: leggibile e funzionante</div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div id="tab-tech" class="tab-panel">
+
+<div class="tech-section">
+    <h3><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Riepilogo</h3>
+    <table class="tech-table">
+        <tr><th>Campo</th><th>Valore</th></tr>
+        <tr><td>Target URL</td><td><code>https://promo.in-energy.it/gruppo-altair</code></td></tr>
+        <tr><td>Server</td><td><code>172.238.225.65 (Cloudways Netycom 1545299)</code></td></tr>
+        <tr><td>App</td><td><code>promoinenergy (Laravel)</code></td></tr>
+        <tr><td>Viewport</td><td><code>390&times;844 (iPhone 12 Pro, 3x)</code></td></tr>
+        <tr><td>Page height</td><td><code>11.839px</code></td></tr>
+        <tr><td>Scenario</td><td>Verifica mobile</td></tr>
+        <tr><td>Iterazioni</td><td>1</td></tr>
+        <tr><td>Console errors</td><td><code>4 (tutti 404)</code></td></tr>
+        <tr><td>Verdict</td><td style="color: var(--yellow); font-weight: 600;">ISSUES</td></tr>
+    </table>
+</div>
+
+<div class="tech-section">
+    <h3><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Issue 1: Immagine rotta (404 su resize)</h3>
+    <div class="log-block">Immagine: happy-family-spending-time-together-playing-at-ho-2025-03-14-18-10-18-utc
+
+Srcset dichiarato:
+  1920w (full)    &rarr; HTTP 200 &check;
+  1536x996       &rarr; non testato
+  1024x664       &rarr; HTTP 200 &check;
+  768x498        &rarr; HTTP 404 &cross;
+  300x195        &rarr; HTTP 404 &cross;
+  150x150        &rarr; HTTP 404 &cross;
+
+sizes="(max-width: 800px) 100vw, 800px"
+
+Su mobile (390px viewport, 3x DPR) il browser richiede ~1170px.
+Sceglie 1024x664 dal srcset &rarr; HTTP 200 MA naturalWidth=0.
+L'img tag ha width forzato ma l'immagine non si carica.
+
+Bounding box risultante: 282&times;183px (vuoto)
+Posizione: y=1577 (dopo "Perch&eacute; aderire", prima della card Luce)
+
+Fix: rigenerare i thumbnail WordPress (wp media regenerate)
+oppure uploadare nuovamente l'immagine originale.</div>
+</div>
+
+<div class="tech-section">
+    <h3><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Issue 2: PDF links alignment inconsistency</h3>
+    <div class="log-block">6 link PDF totali in pagina (.elementor-button-wrapper)
+
+LUCE (3 link, y=2766-2894):
+  &bull; "Condizioni tecnico economiche"   &rarr; text-align: start
+  &bull; "Scheda sintetica"                &rarr; text-align: start
+  &bull; "Scheda di confrontabilit&agrave;"       &rarr; text-align: start
+  &check; Tutti dentro la card, coerenti
+
+GAS (3 link, y=4083-4403):
+  &bull; "Condizioni tecnico economiche"   &rarr; text-align: left
+  &bull; "Scheda sintetica"                &rarr; text-align: left
+  &bull; "Condizioni generali offerta"     &rarr; text-align: center  &cross;
+    FUORI dalla card .e-con (background verde/gradiente)
+    Posizionato DOPO il CTA "Aderisci ora all'offerta Gas"
+    Wrapper: elementor-element-3d431bf, elementor-align-center
+    Sembra un widget Elementor posizionato nel container sbagliato
+
+Fix: spostare il widget "Condizioni generali" DENTRO la card Gas,
+prima del bottone CTA, e allinearlo a sinistra come gli altri.</div>
+</div>
+
+<div class="tech-section">
+    <h3><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Issue 3: 4 punti &mdash; spaziature irregolari</h3>
+    <div class="log-block">Sezione "Parliamone insieme" (y=4559-5979)
+4 widget heading numerati su sfondo immagine
+
+Distanze Y tra elementi (top-to-top):
+  Titolo "Preferisci parlare" &rarr; Punto 1: 264px
+  Punto 1 &rarr; Punto 2:                     264px
+  Punto 2 &rarr; Punto 3:                     296px  &cross; (+32px)
+  Punto 3 &rarr; Punto 4:                     264px
+
+Distanze icona-numero &rarr; testo:
+  Ogni punto ha ~100-150px di gap verticale tra
+  l'icona numerata e il testo sottostante.
+
+Su desktop probabilmente i punti sono affiancati in grid.
+Su mobile collassano in colonna e i padding desktop
+diventano gap verticali eccessivi.
+
+Fix: ridurre padding/margin verticali su mobile per i container
+dei 4 punti (.e-con-full children della sezione Parliamone)</div>
+</div>
+
+<div class="tech-section">
+    <h3><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Issue 4: Sezione &ldquo;Impegno ambiente&rdquo; &mdash; spaziatura</h3>
+    <div class="log-block">Sezione: .elementor-element-7682275 (y=6489, h=817px)
+Sfondo: gradiente verde/blu acqua
+
+Sezione precedente (y=6345-6489): padding 24px top/bottom
+  &rarr; GAP tra prev.bottom e section.top = 0px  &cross;
+
+Sezione successiva (y=7326): margin-top 20px
+  &rarr; GAP dopo section = 20px (minimo)
+
+La sezione verde non ha margin-top n&eacute; la precedente
+ha margin-bottom. Risultato: attaccate senza respiro.
+
+Fix: aggiungere margin-top 40-60px alla sezione ambiente
+(.elementor-element-7682275) e margin-bottom 40px.</div>
+</div>
+
+<div class="tech-section">
+    <h3><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Console errors (4)</h3>
+    <div class="log-block">Tutti 404:
+1. happy-family-...-300x195.jpg   (srcset variant)
+2. happy-family-...-768x498.jpg   (srcset variant)
+3. happy-family-...-150x150.jpg   (srcset variant)
+4. Risorsa aggiuntiva non identificata</div>
+</div>
+
+<div class="tech-section">
+    <h3><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94L6.73 20.15a2.1 2.1 0 01-2.97-2.97l6.65-6.65a6 6 0 017.94-7.94l-3.66 3.71z"/></svg>Fix raccomandati (priorit&agrave;)</h3>
+    <ul style="font-size:.78rem; color:var(--text-secondary); padding-left:1.2rem; line-height:1.9;">
+        <li><strong>P1 &mdash; Immagine rotta:</strong> Rigenerare thumbnail o re-upload immagine. Il buco vuoto &egrave; il problema pi&ugrave; evidente.</li>
+        <li><strong>P2 &mdash; PDF &ldquo;Condizioni generali&rdquo;:</strong> Spostare dentro la card Gas in Elementor, allineare a sinistra come gli altri.</li>
+        <li><strong>P3 &mdash; 4 punti spacing:</strong> Override CSS mobile per ridurre padding verticali dei container nella sezione &ldquo;Parliamone insieme&rdquo;.</li>
+        <li><strong>P4 &mdash; Sezione ambiente:</strong> Aggiungere margin-top 40-60px alla sezione verde.</li>
+    </ul>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="watermark"><a href="https://giobi.com">giobi.com</a></div>
+
+<script>
+function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active')});
+    document.getElementById('tab-'+tab).classList.add('active');
+    btn.classList.add('active');
+}
+</script>
+</body>
+</html>

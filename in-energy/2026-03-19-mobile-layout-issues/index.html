@@ -112,8 +112,8 @@ body { font-family: var(--mono); background: var(--bg); color: var(--text); line
     <h1 class="title">InEnergy Promo &mdash; Problemi di layout mobile sulla pagina Gruppo Altair</h1>
     <div class="meta-row">
         <span class="meta-item"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>19 marzo 2026</span>
-        <span class="meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="12"/></svg>1 iterazione</span>
-        <span class="meta-item"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Verifica</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="12"/></svg>2 iterazioni (verifica + fix)</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Verifica + Correzione</span>
         <span class="meta-item"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>promo.in-energy.it/gruppo-altair</span>
         <span class="meta-item"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>Mobile (390&times;844)</span>
     </div>
@@ -127,13 +127,13 @@ body { font-family: var(--mono); background: var(--bg); color: var(--text); line
     <div class="score-ring">
         <svg width="100" height="100" viewBox="0 0 100 100">
             <circle class="track" cx="50" cy="50" r="42"/>
-            <circle class="fill" cx="50" cy="50" r="42" stroke="var(--yellow)" stroke-dasharray="263.9" stroke-dashoffset="79.2"/>
+            <circle class="fill" cx="50" cy="50" r="42" stroke="var(--green)" stroke-dasharray="263.9" stroke-dashoffset="26.4"/>
         </svg>
-        <div class="score-number">70<small>/100</small></div>
+        <div class="score-number">90<small>/100</small></div>
     </div>
     <div class="score-summary">
-        <h2>Problemi significativi di layout mobile</h2>
-        <p>La pagina funziona e i contenuti sono accessibili, ma la resa su telefono presenta diversi difetti visivi: un'immagine mancante che lascia un grande buco vuoto, i link ai documenti PDF con allineamenti incoerenti, le spaziature tra le sezioni irregolari, e la zona &ldquo;Il nostro impegno per l'ambiente&rdquo; che manca di respiro. Nessun errore funzionale, ma l'impressione complessiva &egrave; poco curata.</p>
+        <h2>Problemi corretti &mdash; layout mobile migliorato</h2>
+        <p>I 4 problemi di layout mobile segnalati sono stati tutti corretti nella stessa sessione: l'immagine mancante ora si carica correttamente, i link PDF sono allineati e dentro la scheda giusta, i 4 passaggi hanno spaziature compatte e uniformi, e la sezione &ldquo;Il nostro impegno per l'ambiente&rdquo; ha il respiro adeguato. Resta da valutare un leggero eccesso di spazio bianco nella sezione immagine, ma il miglioramento complessivo &egrave; netto.</p>
     </div>
 </div>
 </div>
@@ -147,6 +147,11 @@ body { font-family: var(--mono); background: var(--bg); color: var(--text); line
         <div class="tl-item"><div class="tl-dot yellow"></div><span class="tl-time">14:23</span><span class="tl-text">Sezione &ldquo;Parliamone insieme&rdquo;: 4 passi con gap eccessivi tra numerazione e testo</span></div>
         <div class="tl-item"><div class="tl-dot yellow"></div><span class="tl-time">14:24</span><span class="tl-text">Sezione &ldquo;Il nostro impegno per l'ambiente&rdquo;: nessuno spazio sopra, poco sotto</span></div>
         <div class="tl-item"><div class="tl-dot red"></div><span class="tl-time">14:25</span><span class="tl-text">4 errori 404 in console (3 varianti immagine + 1 risorsa)</span></div>
+        <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">17:00</span><span class="tl-text">FIX 1: rimosso srcset rotto, immagine carica da versione 1024x664</span></div>
+        <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">17:02</span><span class="tl-text">FIX 2: spostato &ldquo;Condizioni generali&rdquo; dentro la card Gas, allineato a sinistra</span></div>
+        <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">17:05</span><span class="tl-text">FIX 3: ridotto gap dei 4 passaggi da ~20px a 4px, icone compatte</span></div>
+        <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">17:06</span><span class="tl-text">FIX 4: aggiunto margine 48px sopra e 24px sotto sezione ambiente</span></div>
+        <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">17:12</span><span class="tl-text">Verifica finale: tutti i fix confermati via Playwright</span></div>
     </div>
 </div>
 
@@ -238,6 +243,34 @@ body { font-family: var(--mono); background: var(--bg); color: var(--text); line
         <div class="step-img">
             <img src="05-offerta-luce.png" alt="Offerta Luce">
             <div class="step-img-caption">Scheda offerta Luce: leggibile e funzionante</div>
+        </div>
+    </div>
+</div>
+
+<div class="step" style="border-color: var(--green); border-width: 2px;">
+    <div class="step-header">
+        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="step-title">Correzioni applicate &mdash; tutte e 4</span>
+    </div>
+    <p class="step-explain">Nella stessa sessione abbiamo corretto tutti i problemi trovati. L'immagine della famiglia ora si carica correttamente (usata una versione che esiste sul server). Il link &ldquo;Condizioni generali dell'offerta&rdquo; &egrave; stato spostato dentro la scheda Gas, allineato come gli altri. I 4 passaggi sono ora compatti e con spaziature uniformi. La sezione verde &ldquo;Il nostro impegno per l'ambiente&rdquo; ha il giusto respiro sopra e sotto.</p>
+    <div class="step-img-row">
+        <div class="step-img">
+            <img src="after-fix2-pdf.png" alt="PDF links corretti dentro la card Gas">
+            <div class="step-img-caption">Dopo: i 3 link PDF sono tutti dentro la scheda Gas, allineati</div>
+        </div>
+        <div class="step-img">
+            <img src="after-fix3-4punti.png" alt="4 passaggi con spaziature corrette">
+            <div class="step-img-caption">Dopo: i 4 passaggi compatti e uniformi</div>
+        </div>
+    </div>
+    <div class="step-img-row" style="margin-top: .75rem;">
+        <div class="step-img">
+            <img src="after-fix4-ambiente.png" alt="Sezione ambiente con respiro">
+            <div class="step-img-caption">Dopo: sezione ambiente con margine adeguato</div>
+        </div>
+        <div class="step-img">
+            <img src="after-fix1-image.png" alt="Immagine caricata correttamente">
+            <div class="step-img-caption">Dopo: sezione &ldquo;Perch&eacute; aderire&rdquo; con immagine visibile</div>
         </div>
     </div>
 </div>

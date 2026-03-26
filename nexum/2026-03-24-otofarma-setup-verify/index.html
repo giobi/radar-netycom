@@ -108,10 +108,10 @@ body { font-family: var(--mono); background: var(--bg); color: var(--text); line
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><line x1="12" y1="2" x2="12" y2="4"/></svg>
         <a href="../">Radar &mdash; Nexum</a>
     </div>
-    <h1 class="title">Otofarma &mdash; Verifica setup nuova piattaforma</h1>
+    <h1 class="title">Otofarma &mdash; Setup piattaforma completato</h1>
     <div class="meta-row">
-        <span class="meta-item"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>24 marzo 2026</span>
-        <span class="meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="12"/></svg>Post-deploy</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>24&ndash;26 marzo 2026</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="12"/></svg>Post-deploy &middot; 2 iterazioni</span>
         <span class="meta-item"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>nexumapp.otofarma.estendo.it</span>
     </div>
 </div>
@@ -124,13 +124,13 @@ body { font-family: var(--mono); background: var(--bg); color: var(--text); line
     <div class="score-ring">
         <svg width="100" height="100" viewBox="0 0 100 100">
             <circle class="track" cx="50" cy="50" r="42"/>
-            <circle class="fill" cx="50" cy="50" r="42" stroke="var(--yellow)" stroke-dasharray="263.9" stroke-dashoffset="105.56"/>
+            <circle class="fill" cx="50" cy="50" r="42" stroke="var(--green)" stroke-dasharray="263.9" stroke-dashoffset="13.2"/>
         </svg>
-        <div class="score-number" style="color:var(--yellow)">60<small>/100</small></div>
+        <div class="score-number" style="color:var(--green)">95<small>/100</small></div>
     </div>
     <div class="score-summary">
-        <h2>Piattaforma parzialmente pronta &mdash; serve intervento server</h2>
-        <p>La nuova piattaforma Otofarma &egrave; stata creata: il dominio risponde, il certificato SSL funziona, i dati (categorie, prodotti, step) sono stati importati correttamente da Smartsound. Per&ograve; le pagine del sito non si aprono: Apache non &egrave; configurato per gestire gli indirizzi interni. Serve una modifica alla configurazione del server da parte di chi lo gestisce (Mike Barbieri).</p>
+        <h2>Piattaforma pronta e funzionante</h2>
+        <p>La nuova piattaforma Otofarma &egrave; operativa. Login, pannello amministrazione, categorie e prodotti sono tutti accessibili. I dati sono stati importati da Smartsound: 12 categorie, 5 prodotti con fasce di prezzo, 40 configurazioni dei passaggi di vendita e 3.388 marche/modelli. Manca solo la configurazione dei prodotti nello specifico negozio per abilitare la vendita diretta.</p>
     </div>
 </div>
 </div>
@@ -138,15 +138,16 @@ body { font-family: var(--mono); background: var(--bg); color: var(--text); line
 <div class="timeline">
     <h3><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Cronologia intervento</h3>
     <div class="tl">
-        <div class="tl-item"><div class="tl-dot red"></div><span class="tl-time">10:22</span><span class="tl-text">Segnalazione: il sito dava errore 500 (pagina di errore generica)</span></div>
-        <div class="tl-item"><div class="tl-dot yellow"></div><span class="tl-time">10:24</span><span class="tl-text">Diagnosi: mancava la chiave di cifratura dell'applicazione nel file di configurazione</span></div>
-        <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">10:25</span><span class="tl-text">Chiave generata &mdash; errore 500 risolto, il server ora risponde</span></div>
-        <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">10:30</span><span class="tl-text">Import dati: 12 categorie, 5 prodotti, 40 configurazioni step, 3.388 marche/modelli copiati da Smartsound</span></div>
-        <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">10:35</span><span class="tl-text">Utente test creato con negozio e ruolo amministratore</span></div>
-        <div class="tl-item"><div class="tl-dot red"></div><span class="tl-time">10:38</span><span class="tl-text">Test automatizzato: tutte le pagine danno &ldquo;Not Found&rdquo; &mdash; la pagina di login non si apre</span></div>
-        <div class="tl-item"><div class="tl-dot yellow"></div><span class="tl-time">10:42</span><span class="tl-text">Causa: configurazione Apache incompleta &mdash; manca il permesso per gli indirizzi interni (AllowOverride)</span></div>
+        <div class="tl-item"><div class="tl-dot red"></div><span class="tl-time">24/3 10:22</span><span class="tl-text">Errore 500 sul dominio &mdash; chiave cifratura mancante</span></div>
+        <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">10:25</span><span class="tl-text">Chiave generata, errore risolto</span></div>
+        <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">10:30</span><span class="tl-text">Import dati da Smartsound (categorie, prodotti, step, marche/modelli)</span></div>
+        <div class="tl-item"><div class="tl-dot red"></div><span class="tl-time">10:38</span><span class="tl-text">Pagine inaccessibili &mdash; configurazione Apache incompleta</span></div>
+        <div class="tl-item"><div class="tl-dot yellow"></div><span class="tl-time">10:42</span><span class="tl-text">Segnalato a Mike Barbieri via email</span></div>
+        <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">26/3 17:30</span><span class="tl-text">Mike ha corretto la configurazione &mdash; pagine accessibili</span></div>
+        <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">17:35</span><span class="tl-text">Corretti errori residui (cache, logo)</span></div>
+        <div class="tl-item"><div class="tl-dot green"></div><span class="tl-time">18:10</span><span class="tl-text">Test automatizzato: login, categorie, prodotti &mdash; tutto funzionante</span></div>
     </div>
-    <div class="tl-duration">Stato: in attesa di intervento server (Mike Barbieri)</div>
+    <div class="tl-duration" style="background:var(--green-bg);color:var(--green);">Risoluzione completa: 2 giorni (attesa intervento server)</div>
 </div>
 
 <div class="tabs">
@@ -166,45 +167,57 @@ body { font-family: var(--mono); background: var(--bg); color: var(--text); line
 <div class="step">
     <div class="step-header">
         <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span class="step-title">Dominio e certificato funzionanti</span>
+        <span class="step-title">Pagina di accesso funzionante</span>
     </div>
-    <p class="step-explain">Il dominio nexumapp.otofarma.estendo.it &egrave; attivo e raggiungibile. Il certificato di sicurezza (HTTPS) &egrave; installato e valido. Il server risponde alle richieste.</p>
-</div>
-
-<div class="step">
-    <div class="step-header">
-        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span class="step-title">Errore iniziale risolto: chiave di cifratura mancante</span>
-    </div>
-    <p class="step-explain">Al primo accesso la piattaforma dava un errore generico (pagina bianca). La causa era una chiave di sicurezza non configurata. &Egrave; stata generata e il problema &egrave; stato risolto immediatamente.</p>
-</div>
-
-<div class="step">
-    <div class="step-header">
-        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span class="step-title">Dati importati da Smartsound</span>
-    </div>
-    <p class="step-explain">Come richiesto, abbiamo copiato tutte le categorie (12), i prodotti con le fasce di prezzo (5), le configurazioni dei passaggi di vendita (40) e l'archivio marche/modelli (3.388 voci) dalla piattaforma Smartsound. I dati sono pronti &mdash; quando il sito sar&agrave; accessibile, saranno gi&agrave; visibili.</p>
-</div>
-
-<div class="step">
-    <div class="step-header">
-        <div class="step-icon fail"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
-        <span class="step-title">Il sito non mostra le pagine: serve intervento sul server</span>
-    </div>
-    <p class="step-explain">Provando ad accedere alla pagina di login o a qualsiasi altra sezione, il sito mostra &ldquo;Not Found&rdquo;. Il problema non &egrave; nei dati o nell'applicazione, ma nella configurazione del server web (Apache): non &egrave; stata attivata un'opzione necessaria per far funzionare gli indirizzi delle pagine. &Egrave; una modifica che richiede accesso amministrativo al server.</p>
+    <p class="step-explain">Il dominio nexumapp.otofarma.estendo.it &egrave; attivo, il certificato di sicurezza &egrave; valido e la pagina di accesso si apre correttamente con il logo Estendo.</p>
     <div class="step-img">
-        <img src="radar-01-login-404.png" alt="Pagina Not Found su Otofarma">
-        <div class="step-img-caption">Errore &ldquo;Not Found&rdquo; sulla pagina di accesso</div>
+        <img src="radar-login-page.png" alt="Pagina di login Otofarma">
+        <div class="step-img-caption">Pagina di accesso con logo Estendo e modulo di login</div>
+    </div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="step-title">Accesso al pannello di gestione</span>
+    </div>
+    <p class="step-explain">L'accesso funziona correttamente. Dopo il login viene mostrata la selezione del punto vendita e il pannello di amministrazione completo con tutte le sezioni: utenti, punti vendita, categorie, prodotti, vendita, recessi.</p>
+    <div class="step-img">
+        <img src="radar-dashboard.png" alt="Pannello Otofarma dopo il login">
+        <div class="step-img-caption">Pannello di amministrazione con menu completo</div>
+    </div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="step-title">Categorie importate da Smartsound</span>
+    </div>
+    <p class="step-explain">Tutte le 12 categorie sono state copiate dalla piattaforma Smartsound e sono visibili: frazionamento pagamento, tipo di prodotto, coperture (danno accidentale, furto, smarrimento), protesi acustiche, durata e tipologia di rinnovo.</p>
+    <div class="step-img">
+        <img src="radar-categorie.png" alt="Categorie Otofarma">
+        <div class="step-img-caption">Sezione Categorie con le 12 voci importate</div>
+    </div>
+</div>
+
+<div class="step">
+    <div class="step-header">
+        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="step-title">Prodotti e fasce di prezzo configurati</span>
+    </div>
+    <p class="step-explain">I 5 prodotti &ldquo;Protezione Protesi Acustiche&rdquo; con le rispettive fasce di prezzo (da 0 a 5.000&euro;) sono presenti e configurati con tutti i passaggi di vendita (8 step ciascuno) e i prezzi associati.</p>
+    <div class="step-img">
+        <img src="radar-prodotti.png" alt="Prodotti Otofarma">
+        <div class="step-img-caption">Sezione Prodotti con le 5 fasce di prezzo</div>
     </div>
 </div>
 
 <div class="step">
     <div class="step-header">
         <div class="step-icon warn"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-        <span class="step-title">Prossimo passo: contattare chi gestisce il server</span>
+        <span class="step-title">Prossimo passo: associare i prodotti al negozio</span>
     </div>
-    <p class="step-explain">Serve che Mike Barbieri aggiunga una riga alla configurazione del server. &Egrave; un'operazione rapida (un minuto). Una volta fatto, la piattaforma dovrebbe funzionare immediatamente con i dati gi&agrave; importati.</p>
+    <p class="step-explain">La sezione di vendita al momento non mostra prodotti. Questo &egrave; normale: i prodotti devono essere associati al punto vendita specifico prima di poter essere messi in vendita. Una volta completata questa configurazione, sar&agrave; possibile creare nuovi contratti.</p>
 </div>
 
 </div>
@@ -220,7 +233,7 @@ body { font-family: var(--mono); background: var(--bg); color: var(--text); line
         <tr><td>Path</td><td><code>/var/www/html/nexum-otofarma/current/public</code></td></tr>
         <tr><td>Database</td><td><code>nexum-otofarma</code></td></tr>
         <tr><td>Scenario</td><td>Post-deploy / Setup verification</td></tr>
-        <tr><td>Verdict</td><td style="color:var(--yellow);font-weight:600;">BLOCKED &mdash; attesa config Apache</td></tr>
+        <tr><td>Verdict</td><td style="color:var(--green);font-weight:600;">HEALTHY &mdash; piattaforma operativa</td></tr>
     </table>
 </div>
 

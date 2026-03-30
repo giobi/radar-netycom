@@ -1,0 +1,46 @@
+{
+  "screenshots": [
+    {
+      "file": "screenshot-04-step1-dati.png",
+      "label": "Step 1 — Dati contratto",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/2/step/1"
+    },
+    {
+      "file": "screenshot-05-step2.png",
+      "label": "Step 2 — 2",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/2/step/2"
+    },
+    {
+      "file": "screenshot-06-step3.png",
+      "label": "Step 3 — 2",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/2/step/2"
+    },
+    {
+      "file": "screenshot-07-step4.png",
+      "label": "Step 4 — 2",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/2/step/2"
+    },
+    {
+      "file": "screenshot-08-step5.png",
+      "label": "Step 5 — 2",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/2/step/2"
+    },
+    {
+      "file": "screenshot-09-step6.png",
+      "label": "Step 6 — 2",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/2/step/2"
+    },
+    {
+      "file": "screenshot-10-step7.png",
+      "label": "Step 7 — 2",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/2/step/2"
+    },
+    {
+      "file": "screenshot-11-step8.png",
+      "label": "Step 8 — 2",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/2/step/2"
+    }
+  ],
+  "log_errors": "Nessun errore",
+  "found_zuora": false
+}

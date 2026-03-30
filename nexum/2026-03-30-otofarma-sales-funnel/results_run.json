@@ -1,0 +1,32 @@
+{
+  "screenshots": [
+    {
+      "file": "run-01-01-dashboard.png",
+      "label": "Dashboard utente",
+      "url": "https://nexumapp.otofarma.estendo.it/me"
+    },
+    {
+      "file": "run-02-02-contract-select.png",
+      "label": "Selezione prodotto — 5 disponibili",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/select"
+    },
+    {
+      "file": "run-03-03-step1.png",
+      "label": "Step 1 — Riepilogo prodotto e importo",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/6/step/1"
+    },
+    {
+      "file": "run-04-04-step2-filled.png",
+      "label": "Step 2 — Anagrafica compilata",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/6/step/2"
+    },
+    {
+      "file": "run-05-03-step3.png",
+      "label": "Step 3",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/6/step/3"
+    }
+  ],
+  "log_errors": "Nessun errore nel log",
+  "found_zuora": false,
+  "step_errors": []
+}

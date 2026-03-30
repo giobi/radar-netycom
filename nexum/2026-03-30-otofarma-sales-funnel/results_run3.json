@@ -1,0 +1,21 @@
+{
+  "screenshots": [
+    {
+      "file": "run3-01-step4-blank.png",
+      "label": "Step 4 — Privacy e consensi (vuoto)",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/6/step/4"
+    },
+    {
+      "file": "run3-02-step4-checked.png",
+      "label": "Step 4 — Consensi accettati",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/6/step/4"
+    },
+    {
+      "file": "run3-03-step5.png",
+      "label": "Step 5",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/6/step/5"
+    }
+  ],
+  "log_errors": "Nessun errore",
+  "found_zuora": false
+}

@@ -1,0 +1,16 @@
+{
+  "screenshots": [
+    {
+      "file": "run6-01-step5-start.png",
+      "label": "Step 5",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/6/step/6"
+    },
+    {
+      "file": "run6-02-step5-filled.png",
+      "label": "Step 5 compilato",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/6/step/6"
+    }
+  ],
+  "log_errors": "Nessun errore",
+  "found_zuora": false
+}

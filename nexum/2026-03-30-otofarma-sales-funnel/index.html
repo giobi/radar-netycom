@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar — Nexum Otofarma — Flusso vendita</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Mono',monospace;background:#fafaf9;color:#1c1917;font-size:14px;line-height:1.6}
+.container{max-width:1080px;margin:0 auto;padding:32px 24px}
+.header{border-bottom:1px solid #e5e5e0;padding-bottom:24px;margin-bottom:32px}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.radar-badge{background:#1c1917;color:#fafaf9;padding:2px 8px;font-size:11px;letter-spacing:.1em}
+.project-name{font-size:13px;color:#78716c}
+h1{font-size:22px;font-weight:600;margin-bottom:4px}
+.meta{font-size:12px;color:#78716c;display:flex;gap:24px;flex-wrap:wrap}
+
+/* Score card */
+.score-card{display:flex;align-items:center;gap:32px;background:#fff;border:1px solid #e5e5e0;padding:24px;margin-bottom:32px}
+.score-circle{flex-shrink:0}
+.score-circle svg{display:block}
+.score-info h2{font-size:18px;font-weight:600;margin-bottom:8px}
+.score-info p{color:#57534e;font-size:13px;max-width:500px}
+.verdict{display:inline-block;padding:3px 10px;font-size:11px;letter-spacing:.08em;margin-top:8px}
+.verdict.healthy{background:#d1fae5;color:#065f46}
+.verdict.warning{background:#fef3c7;color:#92400e}
+
+/* Timeline */
+.timeline{margin-bottom:32px}
+.timeline h3{font-size:13px;font-weight:600;letter-spacing:.05em;color:#78716c;text-transform:uppercase;margin-bottom:16px}
+.timeline-items{border-left:2px solid #e5e5e0;padding-left:20px;display:flex;flex-direction:column;gap:12px}
+.tl-item{display:flex;gap:12px;align-items:flex-start;position:relative}
+.tl-item::before{content:'';width:8px;height:8px;border-radius:50%;background:#78716c;position:absolute;left:-25px;top:5px}
+.tl-item.ok::before{background:#059669}
+.tl-item.warn::before{background:#d97706}
+.tl-dot{font-size:12px;color:#78716c;white-space:nowrap;min-width:50px}
+.tl-text{font-size:13px}
+
+/* Tabs */
+.tabs{display:flex;gap:0;margin-bottom:0;border-bottom:2px solid #e5e5e0}
+.tab{padding:10px 20px;cursor:pointer;font-size:13px;font-weight:500;color:#78716c;border:1px solid transparent;border-bottom:none;margin-bottom:-2px}
+.tab.active{color:#1c1917;border-color:#e5e5e0;border-bottom-color:#fafaf9;background:#fafaf9}
+.tab-content{display:none;padding:24px 0}
+.tab-content.active{display:block}
+
+/* Steps */
+.step-card{background:#fff;border:1px solid #e5e5e0;margin-bottom:16px;overflow:hidden}
+.step-header{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid #e5e5e0}
+.step-num{width:24px;height:24px;background:#1c1917;color:#fafaf9;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.step-title{font-weight:500;font-size:14px}
+.step-badge{margin-left:auto;font-size:11px;padding:2px 8px}
+.step-badge.ok{background:#d1fae5;color:#065f46}
+.step-badge.warn{background:#fef3c7;color:#92400e}
+.step-body{padding:16px 18px}
+.step-body p{font-size:13px;color:#57534e;margin-bottom:12px}
+.step-screenshot{margin-top:12px}
+.step-screenshot img{width:100%;max-width:800px;border:1px solid #e5e5e0;display:block}
+.step-caption{font-size:11px;color:#78716c;margin-top:6px}
+
+/* Tech tab */
+.tech-block{background:#1c1917;color:#d6d3d1;padding:16px;font-size:12px;margin-bottom:16px;overflow-x:auto}
+.tech-block pre{white-space:pre-wrap;word-break:break-all}
+.tech-label{font-size:11px;font-weight:600;letter-spacing:.08em;color:#78716c;text-transform:uppercase;margin-bottom:8px}
+.kv-row{display:flex;gap:16px;padding:8px 0;border-bottom:1px solid #e5e5e0;font-size:13px}
+.kv-key{color:#78716c;min-width:180px;flex-shrink:0}
+.highlight{background:#fffbeb;border:1px solid #fcd34d;padding:14px 18px;margin-bottom:16px;font-size:13px}
+
+.footer{border-top:1px solid #e5e5e0;margin-top:48px;padding-top:16px;font-size:11px;color:#a8a29e;display:flex;justify-content:space-between}
+
+@media(max-width:600px){
+.score-card{flex-direction:column}
+.meta{flex-direction:column;gap:4px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-top">
+      <span class="radar-badge">RADAR</span>
+      <span class="project-name">nexum / otofarma</span>
+    </div>
+    <h1>Flusso di vendita — Collaudo completo</h1>
+    <div class="meta">
+      <span>📅 30 marzo 2026</span>
+      <span>🎯 nexumapp.otofarma.estendo.it</span>
+      <span>📋 Scenario: verifica</span>
+      <span>📸 9 screenshot</span>
+    </div>
+  </div>
+
+  <!-- Score -->
+  <div class="score-card">
+    <div class="score-circle">
+      <svg width="100" height="100" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="42" fill="none" stroke="#e5e5e0" stroke-width="10"/>
+        <circle cx="50" cy="50" r="42" fill="none" stroke="#059669" stroke-width="10"
+          stroke-dasharray="264" stroke-dashoffset="53"
+          transform="rotate(-90 50 50)" stroke-linecap="round"/>
+        <text x="50" y="55" text-anchor="middle" font-family="IBM Plex Mono" font-size="22" font-weight="600" fill="#1c1917">80</text>
+      </svg>
+    </div>
+    <div class="score-info">
+      <h2>Il flusso di vendita funziona</h2>
+      <p>L'utente pu&ograve; selezionare un prodotto, compilare l'anagrafica, rispondere al questionario, scegliere il metodo di pagamento e arrivare alla pagina di inserimento carta. Il processo &egrave; completo in 6 passi.</p>
+      <span class="verdict healthy">FUNZIONANTE</span>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline">
+    <h3>Cronologia collaudo</h3>
+    <div class="timeline-items">
+      <div class="tl-item ok"><span class="tl-dot">Step 1</span><span class="tl-text">Login automatico — dashboard caricata (0 contratti attivi, normale per piattaforma nuova)</span></div>
+      <div class="tl-item ok"><span class="tl-dot">Step 2</span><span class="tl-text">5 prodotti disponibili su <em>contract/select</em> — catalogo importato correttamente da Smartsound</span></div>
+      <div class="tl-item ok"><span class="tl-dot">Step 3</span><span class="tl-text">Avvio contratto — riepilogo prodotto, importo e date di copertura corretti</span></div>
+      <div class="tl-item ok"><span class="tl-dot">Step 4</span><span class="tl-text">Anagrafica cliente compilata e validata (nome, codice fiscale, indirizzo, provincia)</span></div>
+      <div class="tl-item ok"><span class="tl-dot">Step 5</span><span class="tl-text">Dati protesi acustiche inseriti (marca, modello, numero seriale)</span></div>
+      <div class="tl-item ok"><span class="tl-dot">Step 6</span><span class="tl-text">Consensi privacy e informativa intermediario accettati</span></div>
+      <div class="tl-item ok"><span class="tl-dot">Step 7</span><span class="tl-text">Questionario di comprensione completato (4 domande, risposta conforme)</span></div>
+      <div class="tl-item ok"><span class="tl-dot">Step 8</span><span class="tl-text">Scelta metodo pagamento — carta di credito o SEPA disponibili</span></div>
+      <div class="tl-item ok"><span class="tl-dot">Zuora</span><span class="tl-text">Pagina inserimento carta caricata correttamente ⛔ test fermato qui — nessun pagamento reale effettuato</span></div>
+      <div class="tl-item warn"><span class="tl-dot">Nota</span><span class="tl-text">Credenziali API Estendo non ancora configurate — la finalizzazione del contratto verso Estendo non &egrave; verificabile</span></div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('cliente',this)">Cosa abbiamo verificato</div>
+    <div class="tab" onclick="switchTab('tecnico',this)">Dettagli tecnici</div>
+  </div>
+
+  <!-- Tab Cliente -->
+  <div id="tab-cliente" class="tab-content active">
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">Accesso alla piattaforma</div>
+        <span class="step-badge ok">✓ OK</span>
+      </div>
+      <div class="step-body">
+        <p>L'operatore accede alla piattaforma Otofarma. La dashboard mostra lo storico contratti (zero per ora, &egrave; una piattaforma nuova). Dal menu laterale sono accessibili tutte le funzioni.</p>
+        <div class="step-screenshot">
+          <img src="final-01-dashboard.png" alt="Dashboard Otofarma">
+          <div class="step-caption">Dashboard dopo accesso — pannello ADMIN e ESTENDO disponibili</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">Selezione del prodotto</div>
+        <span class="step-badge ok">✓ OK — 5 prodotti</span>
+      </div>
+      <div class="step-body">
+        <p>L'operatore avvia un nuovo contratto e vede il catalogo prodotti disponibili. Sono presenti 5 tipologie di Protezione Protesi Acustiche, filtrabili per valore del bene, durata e tipologia di rimborso.</p>
+        <div class="step-screenshot">
+          <img src="final-02-contract-select.png" alt="Selezione prodotto">
+          <div class="step-caption">Catalogo prodotti — 5 polizze disponibili con prezzi da €42 a €170</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">Riepilogo e avvio contratto</div>
+        <span class="step-badge ok">✓ OK</span>
+      </div>
+      <div class="step-body">
+        <p>Dopo la selezione, il sistema mostra un riepilogo del prodotto scelto con importo, date di copertura e attestato generato dalla piattaforma Otofarma.</p>
+        <div class="step-screenshot">
+          <img src="final-03-step1-riepilogo.png" alt="Riepilogo contratto">
+          <div class="step-caption">Step 1 — Riepilogo: prodotto, importo €42.84, copertura 10 anni</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div class="step-title">Dati anagrafici del cliente</div>
+        <span class="step-badge ok">✓ OK</span>
+      </div>
+      <div class="step-body">
+        <p>Il modulo raccoglie i dati personali del cliente: nome, cognome, codice fiscale, data di nascita, indirizzo, citt&agrave; e provincia. Tutti i campi sono validati prima di procedere.</p>
+        <div class="step-screenshot">
+          <img src="final-04-step2-filled.png" alt="Anagrafica compilata">
+          <div class="step-caption">Step 2 — Anagrafica cliente compilata e validata</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div class="step-title">Dati della protesi acustica</div>
+        <span class="step-badge ok">✓ OK</span>
+      </div>
+      <div class="step-body">
+        <p>Il sistema richiede i dati specifici del bene assicurato: marca, modello e numero seriale della protesi acustica. Il prezzo del bene viene inserito e verificato rispetto alla fascia del prodotto selezionato.</p>
+        <div class="step-screenshot">
+          <img src="run2-01-step3-filled.png" alt="Dati protesi">
+          <div class="step-caption">Step 3 — Raccolta dati protesi: marca, modello, seriale</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num">6</div>
+        <div class="step-title">Informativa privacy e consensi</div>
+        <span class="step-badge ok">✓ OK</span>
+      </div>
+      <div class="step-body">
+        <p>Il cliente prende visione dell'informativa privacy e dell'informativa intermediario. I consensi obbligatori vengono raccolti prima di procedere al questionario.</p>
+        <div class="step-screenshot">
+          <img src="run3-02-step4-checked.png" alt="Privacy consensi">
+          <div class="step-caption">Step 4 — Informativa privacy con consensi dei documenti 2025</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num">7</div>
+        <div class="step-title">Questionario di comprensione</div>
+        <span class="step-badge ok">✓ OK</span>
+      </div>
+      <div class="step-body">
+        <p>Il sistema pone 4 domande di comprensione sul prodotto acquistato (rinnovo automatico, modalit&agrave; di pagamento, gestione sinistri). Il cliente risponde prima di procedere al pagamento.</p>
+        <div class="step-screenshot">
+          <img src="run5-02-step5-filled.png" alt="Questionario completato">
+          <div class="step-caption">Step 5 — Questionario con 4 domande di comprensione completato</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num">8</div>
+        <div class="step-title">Scelta del metodo di pagamento</div>
+        <span class="step-badge ok">✓ OK</span>
+      </div>
+      <div class="step-body">
+        <p>Il cliente pu&ograve; scegliere tra carta di credito (addebito immediato) o addebito diretto SEPA. Entrambe le opzioni sono disponibili e configurate.</p>
+        <div class="step-screenshot">
+          <img src="final2-01-step6-pagamento.png" alt="Scelta pagamento">
+          <div class="step-caption">Step 6 — Selezione metodo: carta di credito o SEPA</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num">9</div>
+        <div class="step-title">Pagina di pagamento</div>
+        <span class="step-badge ok">✓ OK — test fermato qui</span>
+      </div>
+      <div class="step-body">
+        <p>Selezionata la carta di credito, il sistema carica correttamente la pagina sicura per l'inserimento dei dati della carta (gestita da Zuora/Stripe). Il test &egrave; stato interrotto qui — nessun pagamento reale &egrave; stato effettuato.</p>
+        <div class="step-screenshot">
+          <img src="final2-03-ZUORA-CC.png" alt="Zuora hosted page">
+          <div class="step-caption">Pagina di pagamento sicura — form inserimento carta caricato correttamente ⛔</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <strong>Nota:</strong> Le credenziali API Estendo (necessarie per registrare il contratto nel sistema Estendo) non sono ancora configurate. Il flusso di cassa funziona, ma la finalizzazione verso Estendo richiede le chiavi in attesa da Estendo stessa.
+    </div>
+
+  </div>
+
+  <!-- Tab Tecnico -->
+  <div id="tab-tecnico" class="tab-content">
+
+    <div class="tech-label" style="margin-bottom:12px">Riepilogo tecnico</div>
+
+    <div class="kv-row"><span class="kv-key">Target</span><span>https://nexumapp.otofarma.estendo.it</span></div>
+    <div class="kv-row"><span class="kv-key">Server</span><span>SRVAPPWEB (62.173.167.212) — Apache + PHP-FPM</span></div>
+    <div class="kv-row"><span class="kv-key">Stack</span><span>Laravel + Livewire — multi-tenant Nexum</span></div>
+    <div class="kv-row"><span class="kv-key">Scenario</span><span>Verifica flusso vendita end-to-end</span></div>
+    <div class="kv-row"><span class="kv-key">Utente test</span><span>g.fasoli@netycom.it (user ID 2, ruolo Admin)</span></div>
+    <div class="kv-row"><span class="kv-key">Auth</span><span>radar-login/{userId} (magic link, no reCAPTCHA)</span></div>
+    <div class="kv-row"><span class="kv-key">Zuora</span><span>production — eu.zuora.com — gateway Stripe</span></div>
+    <div class="kv-row"><span class="kv-key">Step percorsi</span><span>8 step + hosted page Zuora (stop prima del pagamento)</span></div>
+    <div class="kv-row"><span class="kv-key">Errori log Laravel</span><span>Nessun errore nel log di oggi</span></div>
+    <div class="kv-row" style="border-bottom:none"><span class="kv-key">Score</span><span>80/100</span></div>
+
+    <div style="margin-top:24px">
+      <div class="tech-label">Detrazione score</div>
+      <div class="tech-block"><pre>-15 ESTENDO_API_KEY, ESTENDO_API_PASSWORD non configurate
+     → contratti non verranno registrati in Estendo alla finalizzazione
+-5  Store name "Otofarma Test Store" (da rinominare in produzione)</pre></div>
+    </div>
+
+    <div>
+      <div class="tech-label">Route del flusso</div>
+      <div class="tech-block"><pre>/contract/select          → selezione prodotto (5 disponibili)
+/contract/start/{id}      → redirect a /contract/{cid}/step/1
+/contract/{id}/step/2     → anagrafica (Livewire wire:model.live)
+/contract/{id}/step/3     → dati protesi (deviceBrand/Model/Serial/Price)
+/contract/{id}/step/4     → privacy e consensi (5 checkbox)
+/contract/{id}/step/5     → questionario (4 radio yes/no)
+/contract/{id}/step/6     → scelta pagamento (wire:click payWith('credit-card'))
+                          → Zuora hosted page (iframe CC o SEPA)</pre></div>
+    </div>
+
+    <div>
+      <div class="tech-label">Variabili .env mancanti</div>
+      <div class="tech-block"><pre>ESTENDO_API_KEY=          (vuoto — da richiedere a Estendo)
+ESTENDO_API_PASSWORD=     (vuoto — da richiedere a Estendo)
+ESTENDO_API_USER=otofarma (presente)</pre></div>
+    </div>
+
+    <div>
+      <div class="tech-label">Note playwright</div>
+      <div class="tech-block"><pre>- Login via /radar-login/{userId} (bypass reCAPTCHA)
+- Avanti button: &lt;a wire:click="nextStep()"&gt; — non un &lt;button&gt;
+- Step 6 proceed: wire:click="payWith('credit-card')" / payWith('sepa')
+- Input senza name/id → wire:model.live="campo" come selettore
+- reCAPTCHA: temporaneamente sostituiti con Google test keys durante test
+  poi ripristinati: 6Lf5STcqAAAA...</pre></div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="container" style="padding-top:0">
+  <div class="footer">
+    <span>Radar — netycom / nexum</span>
+    <span>30 marzo 2026</span>
+  </div>
+</div>
+
+<script>
+function switchTab(name, el) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

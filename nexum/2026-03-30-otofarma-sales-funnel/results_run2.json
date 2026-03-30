@@ -1,0 +1,16 @@
+{
+  "screenshots": [
+    {
+      "file": "run2-01-step3-filled.png",
+      "label": "Step 3 — Dati protesi compilati",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/6/step/3"
+    },
+    {
+      "file": "run2-02-step4.png",
+      "label": "Step 4",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/6/step/4"
+    }
+  ],
+  "log_errors": "Nessun errore",
+  "found_zuora": false
+}

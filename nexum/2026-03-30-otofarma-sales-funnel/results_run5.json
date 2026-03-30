@@ -1,0 +1,21 @@
+{
+  "screenshots": [
+    {
+      "file": "run5-01-step5-start.png",
+      "label": "Step 5 — Questionario",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/6/step/5"
+    },
+    {
+      "file": "run5-02-step5-filled.png",
+      "label": "Step 5 — Questionario completato (Sì a tutto)",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/6/step/5"
+    },
+    {
+      "file": "run5-03-step6.png",
+      "label": "Step 6",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/6/step/5"
+    }
+  ],
+  "log_errors": "Nessun errore",
+  "found_zuora": false
+}

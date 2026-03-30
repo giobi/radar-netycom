@@ -1,0 +1,21 @@
+{
+  "screenshots": [
+    {
+      "file": "screenshot-01-01-dashboard.png",
+      "label": "Dashboard — home (0 contratti)",
+      "url": "https://nexumapp.otofarma.estendo.it/me"
+    },
+    {
+      "file": "screenshot-02-02-contract-select.png",
+      "label": "Selezione prodotto (contract/select)",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/select"
+    },
+    {
+      "file": "screenshot-03-03-contract-start.png",
+      "label": "Avvio contratto: Crea nuovo contratto",
+      "url": "https://nexumapp.otofarma.estendo.it/contract/1/step/1"
+    }
+  ],
+  "log_errors": "Nessun errore",
+  "products_output": "= null\n\n"
+}

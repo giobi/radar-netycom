@@ -168,22 +168,40 @@ body { font-family: var(--mono); background: var(--bg); color: var(--text); line
     </div>
     <p class="step-explain">Alcuni clienti, completando l&rsquo;acquisto e scegliendo il pagamento tramite IBAN bancario, ricevevano un messaggio di errore e non riuscivano a concludere l&rsquo;operazione. Il problema si verificava quando l&rsquo;IBAN veniva inserito con spazi o trattini &mdash; un formato molto comune, perch&eacute; &egrave; cos&igrave; che le banche lo mostrano negli estratti conto e nelle app.</p>
     <p class="step-explain" style="margin-top:.25rem">Esempio: scrivere <strong>IT 60 X054 2811 1010 0000 0123 456</strong> invece di <strong>IT60X0542811101000000123456</strong> causava il blocco.</p>
+    <div class="step-img">
+        <img src="01-payment-choice.png" alt="Scelta pagamento: carta o SEPA">
+        <div class="step-img-caption">La schermata di scelta pagamento, dove il cliente seleziona SEPA (addebito bancario con IBAN)</div>
+    </div>
 </div>
 
 <div class="step">
     <div class="step-header">
-        <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="step-icon fail"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
         <span class="step-title">Errore riprodotto in ambiente di test</span>
     </div>
-    <p class="step-explain">Abbiamo riprodotto esattamente lo stesso errore segnalato nei log del 3 aprile, inserendo un IBAN con spazi. Il sistema ha restituito lo stesso messaggio di errore: conferma che la causa &egrave; stata individuata correttamente.</p>
+    <p class="step-explain">Abbiamo riprodotto esattamente lo stesso errore segnalato nei log del 3 aprile, inserendo un IBAN con spazi nel campo dedicato. Cliccando &ldquo;Controlla IBAN e procedi&rdquo;, il sito ha restituito un errore 500 (pagina bianca con &ldquo;Server Error&rdquo;). Conferma che la causa &egrave; stata individuata correttamente.</p>
+    <div class="step-img">
+        <img src="02-iban-with-spaces.png" alt="IBAN inserito con spazi nel campo">
+        <div class="step-img-caption">IBAN inserito con spazi, come viene tipicamente copiato dall&rsquo;app della banca</div>
+    </div>
+    <div class="step-img" style="margin-top:.5rem">
+        <img src="03-500-error.png" alt="Errore 500 Server Error">
+        <div class="step-img-caption">Risultato: errore 500 &mdash; il sito si blocca e il pagamento non va a buon fine</div>
+    </div>
 </div>
 
 <div class="step">
     <div class="step-header">
         <div class="step-icon ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span class="step-title">Correzione applicata</span>
+        <span class="step-title">Correzione applicata e verificata</span>
     </div>
     <p class="step-explain">Ora il sistema pulisce automaticamente l&rsquo;IBAN prima di controllarlo: rimuove spazi, trattini e qualsiasi carattere non valido, e converte le lettere minuscole in maiuscole. In questo modo l&rsquo;IBAN viene accettato in qualsiasi formato il cliente lo inserisca.</p>
+    <p class="step-explain">Dopo la correzione, lo stesso identico IBAN con spazi viene accettato senza errori e il form avanza ai campi successivi.</p>
+    <div class="step-img">
+        <img src="04-fix-success.png" alt="IBAN accettato dopo la correzione">
+        <div class="step-img-caption">Dopo la correzione: lo stesso IBAN con spazi viene accettato, il form procede regolarmente</div>
+    </div>
+    <a class="step-verify" href="https://estendo.sel.re/contract/1148/step/5" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Verifica sul sito (staging)</a>
 </div>
 
 <div class="step">
